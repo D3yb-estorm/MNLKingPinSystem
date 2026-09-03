@@ -1785,19 +1785,32 @@ function saveProducts() {
 }
 
 // Load Products for Customer
-function loadProducts() {
-    // First, try to load from localStorage
-    const stored = localStorage.getItem('kingpinProducts');
-    if (stored) {
-        try {
-            appData.products = JSON.parse(stored);
-        } catch (e) {
-            console.error('Error loading products from localStorage:', e);
+async function loadProducts() {
+    try {
+        const response = await fetch('api/products.php', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Server returned ${response.status}`);
+
+        const data = await response.json();
+        if (!Array.isArray(data.products)) throw new Error('Server returned invalid product data');
+
+        // The server is shared by all customers, so it is the source of truth.
+        appData.products = data.products;
+        localStorage.setItem('kingpinProducts', JSON.stringify(appData.products));
+    } catch (error) {
+        console.warn('Unable to load shared products; using local copy.', error);
+
+        const stored = localStorage.getItem('kingpinProducts');
+        if (stored) {
+            try {
+                appData.products = JSON.parse(stored);
+            } catch (storageError) {
+                console.error('Error loading products from localStorage:', storageError);
+            }
+        }
+
+        if (!Array.isArray(appData.products) || appData.products.length === 0) {
             loadDefaultProducts();
         }
-    } else if (appData.products.length === 0) {
-        // If nothing in localStorage and no products loaded, load defaults
-        loadDefaultProducts();
     }
 
     displayProducts(appData.products);

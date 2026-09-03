@@ -3786,12 +3786,23 @@ body.light-mode #adminPage .report-card {
 
     #customerPage .navbar-right,
     #adminPage .navbar-right {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
         gap: 5px;
+    }
+
+    #customerPage .nav-menu-scroll-wrapper,
+    #adminPage .nav-menu-scroll-wrapper {
+        width: auto;
+        min-width: 32px;
+        flex: 0 0 32px;
     }
 
     #customerPage .customer-cart-button {
         min-width: 38px;
-        width: 38px;
+        width: 38px !important;
+        flex: 0 0 38px;
         padding: 6px 5px;
         font-size: 13px;
         border: none !important;

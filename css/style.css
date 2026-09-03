@@ -3135,7 +3135,7 @@ body.light-mode #adminPage .navbar {
 /* Floating Back Button - Always Visible */
 .floating-back-button {
     position: fixed;
-    bottom: 42px;
+    bottom: 62px;
     right: 20px;
     z-index: 9999;
     background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
@@ -3169,7 +3169,7 @@ body.light-mode #adminPage .navbar {
 
 @media (max-width: 768px) {
     .floating-back-button {
-        bottom: 32px;
+        bottom: 50px;
         right: 15px;
     }
     

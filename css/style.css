@@ -3174,8 +3174,8 @@ body.light-mode #adminPage .navbar {
     }
     
     .floating-back-button button {
-        font-size: 14px;
-        padding: 10px 16px;
+        font-size: 12px;
+        padding: 8px 12px;
     }
 }
 

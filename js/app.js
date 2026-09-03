@@ -2737,15 +2737,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const customerPage = document.getElementById('customerPage');
     const adminPage = document.getElementById('adminPage');
 
-    // Always start from login when the website is opened or refreshed.
-    clearCurrentSession();
-    localStorage.removeItem('kingpinSession');
-    localStorage.removeItem('kingpinCurrentSession');
-    localStorage.removeItem('kingpinQuickLoginUser');
-    localStorage.removeItem('kingpinForceLogin');
-    if (customerPage) customerPage.style.display = 'none';
-    if (adminPage) adminPage.style.display = 'none';
-    if (loginPage) loginPage.style.display = 'block';
+    // Restore the active dashboard only after a browser refresh.
+    const navigationEntry = performance.getEntriesByType('navigation')[0];
+    const isRefresh = navigationEntry?.type === 'reload';
+    const savedSession = isRefresh ? loadCurrentSession() : null;
+
+    if (savedSession && (savedSession.role === 'customer' || savedSession.role === 'admin')) {
+        checkSavedSession();
+    } else {
+        clearCurrentSession();
+        localStorage.removeItem('kingpinSession');
+        localStorage.removeItem('kingpinCurrentSession');
+        localStorage.removeItem('kingpinQuickLoginUser');
+        localStorage.removeItem('kingpinForceLogin');
+        if (customerPage) customerPage.style.display = 'none';
+        if (adminPage) adminPage.style.display = 'none';
+        if (loginPage) loginPage.style.display = 'block';
+    }
 
     const customerName = document.getElementById('customerDisplayName');
     if (customerName) {

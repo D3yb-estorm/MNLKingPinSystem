@@ -1804,14 +1804,18 @@ function saveProducts() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ products: appData.products })
     }).then(response => {
-        if (response.ok) return response;
+        const contentType = response.headers.get('content-type') || '';
+        if (response.ok && contentType.includes('application/json')) return response;
         return fetch('api/products.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ products: appData.products })
         });
     }).then(response => {
-        if (!response.ok) throw new Error(`Server returned ${response.status}`);
+        const contentType = response.headers.get('content-type') || '';
+        if (!response.ok || !contentType.includes('application/json')) {
+            throw new Error(`Shared product API unavailable (${response.status})`);
+        }
         console.log('Products synced to shared server.');
     }).catch(error => {
         console.warn('Unable to sync products to server; local copy was saved.', error);

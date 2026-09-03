@@ -2,8 +2,11 @@ const fs = require('fs/promises');
 const path = require('path');
 const { getStore } = require('@netlify/blobs');
 
-const store = getStore('kingpin-products');
 const productKey = 'catalog';
+
+function getProductsStore() {
+    return getStore('kingpin-products');
+}
 
 function jsonResponse(statusCode, body) {
     return {
@@ -33,6 +36,7 @@ exports.handler = async function handler(event) {
 
     try {
         if (event.httpMethod === 'GET') {
+            const store = getProductsStore();
             let products = await store.get(productKey, { type: 'json' });
             if (!Array.isArray(products)) {
                 products = await loadInitialProducts();
@@ -54,6 +58,7 @@ exports.handler = async function handler(event) {
             return jsonResponse(413, { error: 'Product data is too large' });
         }
 
+        const store = getProductsStore();
         await store.setJSON(productKey, payload.products);
         return jsonResponse(200, { ok: true });
     } catch (error) {

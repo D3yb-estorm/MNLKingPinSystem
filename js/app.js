@@ -2741,6 +2741,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const navigationEntry = performance.getEntriesByType('navigation')[0];
     const isRefresh = navigationEntry?.type === 'reload';
     const savedSession = isRefresh ? loadCurrentSession() : null;
+    const isAdminPortal = new URLSearchParams(window.location.search).get('portal') === 'admin';
+
+    if (isAdminPortal) {
+        document.getElementById('customerLoginOption')?.style.setProperty('display', 'none');
+        document.getElementById('adminLoginOption')?.style.setProperty('display', 'block');
+        document.getElementById('customerAuthSection')?.style.setProperty('display', 'none');
+        document.getElementById('adminLoginForm')?.style.setProperty('display', 'block');
+        document.querySelector('.login-divider')?.style.setProperty('display', 'none');
+    } else {
+        document.getElementById('adminLoginOption')?.style.setProperty('display', 'none');
+    }
 
     if (savedSession && (savedSession.role === 'customer' || savedSession.role === 'admin')) {
         checkSavedSession();

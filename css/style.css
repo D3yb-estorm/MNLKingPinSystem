@@ -566,6 +566,11 @@ body.light-mode [style*="color: #a0a0a0"] {
     box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.1), 0 8px 18px rgba(0, 0, 0, 0.18);
 }
 
+.nav-menu-toggle::before {
+    content: '☰';
+    margin-right: 6px;
+}
+
 .nav-menu-items {
     position: fixed !important;
     top: 62px !important;
@@ -3789,13 +3794,27 @@ body.light-mode #adminPage .report-card {
         width: 38px;
         padding: 6px 5px;
         font-size: 13px;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
     }
 
     #customerPage .nav-menu-toggle,
     #adminPage .nav-menu-toggle {
-        min-width: 72px;
-        padding: 6px 8px;
-        font-size: 11px;
+        min-width: 32px;
+        width: 32px;
+        padding: 6px 0;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        font-size: 0;
+    }
+
+    #customerPage .nav-menu-toggle::before,
+    #adminPage .nav-menu-toggle::before {
+        margin-right: 0;
+        font-size: 20px;
+        line-height: 1;
     }
 }
 .view-receipt-button { margin-top: 10px; }

@@ -3738,4 +3738,64 @@ body.light-mode #adminPage .report-card {
         flex-direction: column;
     }
 }
+
+@media (max-width: 600px) {
+    #customerPage .navbar,
+    #adminPage .navbar {
+        min-height: 58px;
+        padding: 7px 10px;
+        gap: 6px;
+    }
+
+    #customerPage .navbar-left,
+    #adminPage .navbar-left {
+        gap: 6px;
+        padding-right: 6px;
+        margin-right: 6px;
+    }
+
+    #customerPage .navbar-emblem-container,
+    #adminPage .navbar-emblem-container {
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
+    #customerPage .navbar-emblem,
+    #adminPage .navbar-emblem {
+        width: 27px;
+        height: 27px;
+        border-radius: 6px;
+    }
+
+    #customerPage #customerDisplayName,
+    #adminPage #adminDisplayName {
+        font-size: 11px;
+    }
+
+    #customerPage .navbar-division,
+    #adminPage .navbar-division {
+        display: none;
+    }
+
+    #customerPage .navbar-right,
+    #adminPage .navbar-right {
+        gap: 5px;
+    }
+
+    #customerPage .customer-cart-button {
+        min-width: 38px;
+        width: 38px;
+        padding: 6px 5px;
+        font-size: 13px;
+    }
+
+    #customerPage .nav-menu-toggle,
+    #adminPage .nav-menu-toggle {
+        min-width: 72px;
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+}
 .view-receipt-button { margin-top: 10px; }

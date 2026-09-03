@@ -987,6 +987,7 @@ function logout() {
     if (loginPage) loginPage.style.display = 'block';
     if (customerPage) customerPage.style.display = 'none';
     if (adminPage) adminPage.style.display = 'none';
+    updateFloatingBackButton();
 
     if (document.getElementById('customerLoginFormElement')) {
         document.getElementById('customerLoginFormElement').reset();
@@ -1334,6 +1335,7 @@ function showCustomerDashboard() {
     updateShopLogoDisplay();
     
     loadProducts();
+    updateFloatingBackButton();
     
     // Update badges after UI is shown
     setTimeout(() => {
@@ -1355,6 +1357,7 @@ function showAdminDashboard() {
     showAdminTab('products');
     loadAdminProducts();
     loadAdminOrders();
+    updateFloatingBackButton();
     
     // Update logo display
     updateShopLogoDisplay();
@@ -1557,9 +1560,10 @@ function updateFloatingBackButton() {
     
     const productsVisible = document.getElementById('productsSection')?.style.display !== 'none';
     const isOnLoginPage = document.getElementById('loginPage')?.style.display !== 'none';
+    const isLoggedIn = Boolean(appData.currentRole);
     
     // Show floating back button when NOT on products page and NOT on login page
-    if (!productsVisible && !isOnLoginPage) {
+    if (isLoggedIn && !productsVisible && !isOnLoginPage) {
         floatingBtn.style.display = 'block';
     } else {
         floatingBtn.style.display = 'none';

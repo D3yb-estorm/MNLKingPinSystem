@@ -475,7 +475,7 @@ function loadProductsFromStorage() {
             return response.json();
         })
         .then(data => {
-            if (!Array.isArray(data.products) || data.products.length === 0) return;
+            if (!Array.isArray(data.products)) throw new Error('Server returned invalid product data');
 
             appData.products = data.products;
             localStorage.setItem('kingpinProducts', JSON.stringify(appData.products));

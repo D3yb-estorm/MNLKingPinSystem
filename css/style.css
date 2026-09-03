@@ -2874,7 +2874,7 @@ table tbody tr:hover {
 #loginPage .login-panel-top { height: 30px; color: #73777c; font-size: 9px; letter-spacing: 2px; text-align: right; }
 #loginPage .login-welcome { margin: 24px 0 28px; }
 #loginPage .login-welcome h2 { font-size: 30px; }
-#loginPage .login-welcome h2 em { color: #f4bd1b; font-style: normal; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+#loginPage .login-welcome h2 em { color: #f4bd1b; font-family: 'Brush Script MT', 'Segoe Script', cursive; font-size: 1.16em; font-style: italic; font-weight: 600; letter-spacing: 0; text-decoration: none; }
 #loginPage .auth-buttons { margin-top: 0; }
 #loginPage .auth-buttons { gap: 0; padding: 2px; border: 1px solid #59606a; border-radius: 30px; background: #0d0f12; overflow: hidden; }
 #loginPage .auth-buttons .btn { min-height: 62px; border: 0; border-radius: 26px; font-size: 17px; font-weight: 700; }

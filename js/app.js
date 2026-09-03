@@ -461,7 +461,7 @@ function initializeData() {
 // Load products from localStorage
 async function fetchSharedProducts() {
     try {
-        const response = await fetch('api/products.php', { cache: 'no-store' });
+        const response = await fetch('api/products', { cache: 'no-store' });
         if (!response.ok) throw new Error(`Server returned ${response.status}`);
 
         const contentType = response.headers.get('content-type') || '';
@@ -471,10 +471,16 @@ async function fetchSharedProducts() {
         if (!Array.isArray(data.products)) throw new Error('Server returned invalid product data');
         return data.products;
     } catch (apiError) {
-        const response = await fetch('uploads/products.json', { cache: 'no-store' });
-        if (!response.ok) throw apiError;
+        const response = await fetch('api/products.php', { cache: 'no-store' });
+        if (response.ok && (response.headers.get('content-type') || '').includes('application/json')) {
+            const data = await response.json();
+            if (Array.isArray(data.products)) return data.products;
+        }
 
-        const data = await response.json();
+        const staticResponse = await fetch('uploads/products.json', { cache: 'no-store' });
+        if (!staticResponse.ok) throw apiError;
+
+        const data = await staticResponse.json();
         if (!Array.isArray(data.products)) throw apiError;
         return data.products;
     }
@@ -1793,13 +1799,20 @@ function saveProducts() {
     localStorage.setItem('kingpinProducts', JSON.stringify(appData.products));
     console.log('Products saved to localStorage:', appData.products);
 
-    fetch('api/products.php', {
+    fetch('api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ products: appData.products })
     }).then(response => {
+        if (response.ok) return response;
+        return fetch('api/products.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ products: appData.products })
+        });
+    }).then(response => {
         if (!response.ok) throw new Error(`Server returned ${response.status}`);
-        console.log('Products synced to server.');
+        console.log('Products synced to shared server.');
     }).catch(error => {
         console.warn('Unable to sync products to server; local copy was saved.', error);
     });

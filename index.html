@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>KingPin Custom Ph® CamSur - Jersey Management System</title>
+    <link rel="stylesheet" href="css/style.css?v=20260827-customer-service-bottom-1">
+</head>
+<body>
+    <!-- Login/Authentication Page -->
+   <div id="loginPage" class="page" style="display: none;">
+    <div class="login-container">
+        <button class="theme-toggle login-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+            <span class="theme-toggle-icon">☀</span><span class="theme-toggle-label">Light</span>
+        </button>
+        <div class="login-box">
+            <section class="login-brand-panel">
+                <div class="brand-kicker"><span></span>MNL KINGPIN<br><b>CAMSUR</b></div>
+                <div id="loginLogoContainer" class="login-logo-container">
+                    <img id="loginLogo" src="images/kingpin_logo.png" alt="KingPin CamSur logo" class="login-logo active">
+                </div>
+                <h1 id="loginShopName" class="login-shop-name" aria-hidden="true">KingPin</h1>
+                <p class="login-brand-subtitle">CUSTOM. <b>BOLD.</b> YOURS.</p>
+                <p class="brand-description">PREMIUM JERSEY SHOP MANAGEMENT SYSTEM</p>
+                <div class="brand-signature"><svg class="signature-crown" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 18h26M5 17 3 4l8 7 5-9 5 9 8-7-2 13Z"></path></svg><span class="signature-word">KingPin</span><span class="signature-rule"></span></div>
+            </section>
+            <section class="login-form-panel">
+                <div class="login-panel-top"><span>SECURE ACCESS</span></div>
+                <div class="login-welcome">
+                    <h2>Welcome <em>Back</em></h2>
+                    <p>Sign in to your account</p>
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn btn-primary btn-large auth-option active" onclick="showCustomerAuth()"><span class="role-icon role-icon-customer" aria-hidden="true"></span>Customer</button>
+                    <button class="btn btn-secondary btn-large auth-option" onclick="showAdminLogin()"><span class="role-icon role-icon-admin" aria-hidden="true"><svg viewBox="0 0 32 36" focusable="false"><path d="M16 2 28 7v9c0 8-5 14-12 18C9 30 4 24 4 16V7l12-5Z"></path><path d="M16 11v9M12.5 14.5h7"></path></svg></span>Admin</button>
+                </div>
+                <div class="login-divider"><span>OR</span></div>
+                <div id="customerAuthSection" class="login-auth-section">
+                    <div id="customerLoginForm">
+                        <button type="button" class="btn btn-gmail" id="gmailLoginBtn" onclick="loginWithGmail()">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'%3E%3Cpath fill='%234285F4' d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z'/%3E%3Cpath fill='%2334A853' d='M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z'/%3E%3Cpath fill='%23FBBC05' d='M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z'/%3E%3Cpath fill='%23EA4335' d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z'/%3E%3C/svg%3E" alt="Google"> Sign in with Gmail
+                        </button>
+                        <button type="button" class="btn btn-secondary quick-login-button" id="quickLoginBtn" onclick="quickLogin()" style="display: none;">Quick Login</button>
+                        <form id="customerLoginFormElement" onsubmit="loginCustomer(event)">
+                            <div class="form-group"><label for="customerLoginEmail">✉ &nbsp;Email</label><input type="email" id="customerLoginEmail" placeholder="your@email.com" required></div>
+                            <div class="form-group"><label for="customerLoginPassword">▣ &nbsp;Password</label><div class="password-field"><input type="password" id="customerLoginPassword" placeholder="Enter your password" required autocomplete="current-password"><button type="button" onclick="togglePassword('customerLoginPassword', this)" aria-label="Show password">◉</button></div></div>
+                            <div class="login-options"><label><input type="checkbox" id="rememberCustomer"> <span>Remember me</span></label><button type="button" class="text-button" onclick="forgotPassword()">Forgot password? &nbsp;→</button></div>
+                            <button type="submit" class="btn btn-primary login-submit">→ &nbsp; Login with Email</button>
+                        </form>
+                        <p class="create-account">Don't have an account? <button type="button" class="text-button" onclick="showCustomerSignup()">Create Account &nbsp;→</button></p>
+                        <button type="button" class="login-back" onclick="hideCustomerAuth()"><span aria-hidden="true">←</span> Back</button>
+                        <div id="customerLoginErrorMessage" class="error-message"></div>
+                    </div>
+                    <div id="customerSignupForm" style="display: none;"><h3>Create Customer Account</h3><form id="customerSignupFormElement" onsubmit="signupCustomer(event)"><div class="form-group"><label for="customerSignupUsername">Username</label><input type="text" id="customerSignupUsername" required minlength="3" placeholder="Choose a username" autocomplete="username"></div><div class="form-group"><label for="customerSignupName">Full Name</label><input type="text" id="customerSignupName" required placeholder="John Doe"></div><div class="form-group"><label for="customerSignupEmail">Email</label><input type="email" id="customerSignupEmail" required placeholder="your@gmail.com"></div><div class="form-group"><label for="customerSignupPhone">Phone (optional)</label><input type="tel" id="customerSignupPhone" placeholder="+63 9xx xxx xxxx"></div><div class="form-group"><label for="customerSignupPassword">Password</label><div class="password-field"><input type="password" id="customerSignupPassword" required minlength="6" placeholder="At least 6 characters" autocomplete="new-password"><button type="button" onclick="togglePassword('customerSignupPassword', this)" aria-label="Show password">◉</button></div></div><button type="submit" class="btn btn-primary login-submit">Create Account</button><button type="button" class="btn btn-secondary form-back" onclick="showCustomerLogin()">Back to Login</button></form><div id="customerSignupErrorMessage" class="error-message"></div></div>
+                </div>
+                <div id="adminLoginForm" class="login-auth-section" style="display: none;"><form id="adminForm" onsubmit="loginAdmin(event)"><div class="form-group"><label for="adminUsername">Admin username</label><input type="text" id="adminUsername" placeholder="admin" required></div><div class="form-group"><label for="adminPassword">Password</label><div class="password-field"><input type="password" id="adminPassword" placeholder="Enter your password" required><button type="button" onclick="togglePassword('adminPassword', this)" aria-label="Show password">◉</button></div></div><button type="submit" class="btn btn-primary login-submit">→ &nbsp; Login as Admin</button><button type="button" class="btn btn-secondary form-back" onclick="hideAdminLogin()">← &nbsp; Back</button></form><div id="adminErrorMessage" class="error-message"></div></div>
+                <footer class="login-footer"><svg class="footer-crown" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 18h26M5 17 3 4l8 7 5-9 5 9 8-7-2 13Z"></path></svg><span>© 2025 MNL KingPin CamSur. All rights reserved.</span></footer>
+            </section>
+        </div>
+    </div>
+    </div>
+
+    <!-- Customer Dashboard -->
+    <div id="customerPage" class="page" style="display: none;">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <div class="navbar-emblem-container">
+                    <img id="customerNavbarLogo" src="" alt="Shop Logo" class="navbar-emblem">
+                </div>
+                <span id="customerDisplayName">Welcome, Customer!</span>
+                <span class="navbar-division">MNL KINGPIN / CAMSUR</span>
+            </div>
+            <div class="navbar-right">
+                <button class="btn btn-secondary customer-cart-button" onclick="toggleCart()" aria-label="Open cart" title="Open cart"><span aria-hidden="true">🛒</span><span id="cartCount" class="cart-count-badge">0</span></button>
+                <div class="nav-menu-scroll-wrapper">
+                    <button class="btn btn-secondary nav-menu-toggle" type="button" onclick="toggleNavMenu()">☰ Menu</button>
+                    <div id="customerNavMenu" class="nav-menu-items" aria-label="Customer navigation menu">
+                        <button class="btn btn-secondary" onclick="toggleDesignInterface()">🎨 Create Design</button>
+                        <button class="btn btn-secondary notification-btn" onclick="viewOrders()">My Orders <span class="notification-badge" data-notification-badge="customer-notifications" style="display:none;">0</span></button>
+                        <button class="btn btn-secondary" onclick="viewPurchaseHistory()">Purchase History</button>
+                        <button class="btn btn-secondary" onclick="viewCustomerNotifications()">Notifications</button>
+                        <button class="btn btn-secondary" onclick="viewCustomerSettings()">Settings</button>
+                        <button class="btn btn-secondary theme-toggle" type="button" onclick="toggleTheme()" aria-label="Switch to light mode"><span class="theme-toggle-icon">☀️</span> <span class="theme-toggle-label">Light Mode</span></button>
+                        <button class="btn btn-danger" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="customer-container">
+            <!-- Products Section -->
+            <div id="productsSection" class="products-section">
+                <h2>Available Products</h2>
+                <div class="search-bar">
+                    <input type="text" id="searchProducts" placeholder="Search jerseys...">
+                    <select id="categoryFilter">
+                        <option value="">All Types</option>
+                        <option value="basketball">Basketball Jersey</option>
+                        <option value="volleyball">Volleyball Jersey</option>
+                        <option value="longsleeve">Warmer/Longsleeve</option>
+                        <option value="varsity">Varsity Jacket</option>
+                        <option value="rider">Rider Jersey</option>
+                        <option value="tshirt">T-Shirt</option>
+                        <option value="polo">Polo Shirt</option>
+                        <option value="club">Club Uniform</option>
+                        <option value="organization">Organization Uniform</option>
+                    </select>
+                </div>
+                <div id="productsList" class="products-grid">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Design Interface Section -->
+            <div id="designSection" class="design-section" style="display: none;">
+                <h2>🎨 Create Your Custom Design</h2>
+                
+                <!-- Design Mode Selector -->
+                <div class="design-mode-selector">
+                    <h3>Choose Your Design Option:</h3>
+                    <div class="design-mode-buttons">
+                        <button class="design-mode-btn active" onclick="setDesignMode('customize')" data-mode="customize">
+                            ✏️ Customize Design
+                        </button>
+                        <button class="design-mode-btn" onclick="setDesignMode('presets')" data-mode="presets">
+                            📋 Select Presets
+                        </button>
+                        <button class="design-mode-btn" onclick="setDesignMode('upload')" data-mode="upload">
+                            📤 Upload Design
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Customize Design Mode -->
+                <div id="customizeDesignMode" class="design-mode-content active">
+                    <h3>Customize Your Design</h3>
+                    <p style="color: #a0a0a0; margin-bottom: 20px;">Select the clothing item type and customize the design details</p>
+                    
+                    <!-- Clothing Item Type Selector -->
+                    <div class="form-group">
+                        <label for="clothingItemType" style="font-weight: 600; color: #d4af37;">Clothing Item Type:</label>
+                        <div class="clothing-type-selector">
+                            <button type="button" class="clothing-type-btn active" onclick="setClothingType('tops')" data-type="tops">
+                                👕 Tops (Shirts, Jerseys)
+                            </button>
+                            <button type="button" class="clothing-type-btn" onclick="setClothingType('bottoms')" data-type="bottoms">
+                                👖 Bottoms (Shorts, Pants)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tops Form -->
+                    <div id="topsDesignForm" class="clothing-design-form active">
+                        <h4>👕 Top Design Specifications</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="topColor">Base Color:</label>
+                                <select id="topColor" required>
+                                    <option value="">-- Select Color --</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Blue">Blue</option>
+                                    <option value="Black">Black</option>
+                                    <option value="White">White</option>
+                                    <option value="Yellow">Yellow</option>
+                                    <option value="Green">Green</option>
+                                    <option value="Navy">Navy Blue</option>
+                                    <option value="Maroon">Maroon</option>
+                                    <option value="Gray">Gray</option>
+                                    <option value="Purple">Purple</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="topFabric">Fabric Type:</label>
+                                <select id="topFabric" required>
+                                    <option value="">-- Select Fabric --</option>
+                                    <option value="Polyester">Polyester Mesh</option>
+                                    <option value="Cotton Blend">Cotton Blend</option>
+                                    <option value="100% Polyester">100% Polyester</option>
+                                    <option value="Performance">Performance Material</option>
+                                    <option value="Dri-Fit">Dri-Fit</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="topSize">Size:</label>
+                                <select id="topSize" required>
+                                    <option value="">-- Select Size --</option>
+                                    <option value="XS">Extra Small (XS)</option>
+                                    <option value="S">Small (S)</option>
+                                    <option value="M">Medium (M)</option>
+                                    <option value="L">Large (L)</option>
+                                    <option value="XL">Extra Large (XL)</option>
+                                    <option value="2XL">2X Large (2XL)</option>
+                                    <option value="3XL">3X Large (3XL)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="topAccentColor">Accent/Trim Color (Optional):</label>
+                                <select id="topAccentColor">
+                                    <option value="">-- None --</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Blue">Blue</option>
+                                    <option value="Black">Black</option>
+                                    <option value="White">White</option>
+                                    <option value="Yellow">Yellow</option>
+                                    <option value="Green">Green</option>
+                                    <option value="Gold">Gold</option>
+                                    <option value="Silver">Silver</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="topPrintDesign">🖼️ Print/Design (Front):</label>
+                            <textarea id="topPrintDesign" rows="3" placeholder="Describe your design, text, logo, or pattern for the front..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="topBackDesign">🖼️ Back Design (Optional):</label>
+                            <textarea id="topBackDesign" rows="3" placeholder="Describe any back design or text..."></textarea>
+                        </div>
+
+                        <button type="button" class="btn btn-secondary" onclick="addTopsToCart()">Add Top to Cart</button>
+                    </div>
+
+                    <!-- Bottoms Form -->
+                    <div id="bottomsDesignForm" class="clothing-design-form" style="display: none;">
+                        <h4>👖 Bottoms Design Specifications</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bottomColor">Base Color:</label>
+                                <select id="bottomColor" required>
+                                    <option value="">-- Select Color --</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Blue">Blue</option>
+                                    <option value="Black">Black</option>
+                                    <option value="White">White</option>
+                                    <option value="Yellow">Yellow</option>
+                                    <option value="Green">Green</option>
+                                    <option value="Navy">Navy Blue</option>
+                                    <option value="Maroon">Maroon</option>
+                                    <option value="Gray">Gray</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bottomFabric">Fabric Type:</label>
+                                <select id="bottomFabric" required>
+                                    <option value="">-- Select Fabric --</option>
+                                    <option value="Polyester">Polyester</option>
+                                    <option value="Cotton Blend">Cotton Blend</option>
+                                    <option value="Performance">Performance Material</option>
+                                    <option value="Mesh">Mesh Lining</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bottomSize">Size:</label>
+                                <select id="bottomSize" required>
+                                    <option value="">-- Select Size --</option>
+                                    <option value="XS">Extra Small (XS)</option>
+                                    <option value="S">Small (S)</option>
+                                    <option value="M">Medium (M)</option>
+                                    <option value="L">Large (L)</option>
+                                    <option value="XL">Extra Large (XL)</option>
+                                    <option value="2XL">2X Large (2XL)</option>
+                                    <option value="3XL">3X Large (3XL)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bottomSideStripe">Side Stripe/Design:</label>
+                                <select id="bottomSideStripe">
+                                    <option value="">-- None --</option>
+                                    <option value="Single Stripe">Single Stripe</option>
+                                    <option value="Double Stripe">Double Stripe</option>
+                                    <option value="Full Design">Full Design</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bottomDesign">🖼️ Design Details:</label>
+                            <textarea id="bottomDesign" rows="3" placeholder="Describe your design, text, logo, or pattern for the bottoms..."></textarea>
+                        </div>
+
+                        <button type="button" class="btn btn-secondary" onclick="addBottomsToCart()">Add Bottoms to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Preset Designs Mode -->
+                <div id="presetsDesignMode" class="design-mode-content" style="display: none;">
+                    <h3>Select From Preset Designs</h3>
+                    <p style="color: #a0a0a0; margin-bottom: 20px;">Choose from our professionally designed templates</p>
+                    
+                    <div class="presets-grid" id="presetsGrid">
+                        <!-- Preset templates will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Upload Design Mode -->
+                <div id="uploadDesignMode" class="design-mode-content" style="display: none;">
+                    <h3>Upload Your Design</h3>
+                    <p style="color: #a0a0a0; margin-bottom: 20px;">Upload your own design files (images, PDFs)</p>
+                    
+                    <div class="upload-design-container">
+                        <div class="form-group">
+                            <label for="uploadDesignFile" style="font-weight: 600; color: #d4af37;">📁 Design File:</label>
+                            <input type="file" id="uploadDesignFile" accept="image/*,.pdf" required>
+                            <small style="color: #a0a0a0; display: block; margin-top: 5px;">Supported: JPG, PNG, PDF (Max 10MB)</small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="uploadClothingType">Item Type:</label>
+                                <select id="uploadClothingType" required>
+                                    <option value="">-- Select Type --</option>
+                                    <option value="tops">Top/Shirt</option>
+                                    <option value="bottoms">Bottoms/Shorts</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="uploadItemDescription">Item Description:</label>
+                                <input type="text" id="uploadItemDescription" placeholder="e.g., Basketball Jersey" required>
+                            </div>
+                        </div>
+
+                        <div id="uploadDesignPreview" style="margin: 20px 0; text-align: center; display: none;">
+                            <h4 style="color: #d4af37; margin-bottom: 10px;">Preview:</h4>
+                            <img id="uploadDesignPreviewImage" src="" alt="Design Preview" style="max-width: 300px; height: auto; border: 2px solid #d4af37; padding: 5px; border-radius: 5px;">
+                        </div>
+
+                        <button type="button" class="btn btn-secondary" onclick="addUploadedDesignToCart()">Add Uploaded Design to Cart</button>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="goBackToShop()" style="margin-top: 20px;">Back to Shop</button>
+            </div>
+
+            <!-- Shopping Cart Section -->
+            <div id="cartSection" class="cart-section" style="display: none;">
+                <h2>Shopping Cart</h2>
+                <div id="cartItems" class="cart-items">
+                    <!-- Cart items will be displayed here -->
+                </div>
+                <div class="cart-summary">
+                    <p>Total: <strong>₱<span id="cartTotal">0.00</span></strong></p>
+                    <button class="btn btn-primary" onclick="checkout()">Proceed to Checkout</button>
+                    <button class="btn btn-secondary" onclick="toggleCart()">Continue Shopping</button>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="ordersSection" class="orders-section" style="display: none;">
+                <h2>My Orders</h2>
+                <p style="color: #a0a0a0; margin-bottom: 20px;">Active and pending orders</p>
+                <div id="ordersList" class="orders-list">
+                    <!-- Orders will be displayed here -->
+                </div>
+                <button class="btn btn-secondary" onclick="goBackToShop()">Back to Shop</button>
+            </div>
+
+            <!-- Purchase History Section -->
+            <div id="purchaseHistorySection" class="purchase-history-section" style="display: none;">
+                <h2>Purchase History</h2>
+                <p style="color: #a0a0a0; margin-bottom: 20px;">Completed, delivered, and cancelled orders</p>
+                <div id="purchaseHistoryList" class="purchase-history-list">
+                    <!-- Purchase history will be displayed here -->
+                </div>
+                <button class="btn btn-secondary" onclick="goBackToShop()">Back to Shop</button>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="notificationsSection" class="notifications-section" style="display: none;">
+                <h2>My Notifications</h2>
+                <div id="notificationsList" class="notifications-list">
+                    <!-- Notifications will be displayed here -->
+                </div>
+                <button class="btn btn-secondary" onclick="goBackToShop()">Back to Shop</button>
+            </div>
+
+            <!-- Customer Settings Section -->
+            <div id="customerSettingsSection" class="customer-settings-section" style="display: none;">
+                <h2>Customer Settings</h2>
+                <p>Update your account and delivery information.</p>
+                <form id="customerSettingsForm" onsubmit="saveCustomerSettings(event)">
+                    <div class="form-row">
+                        <div class="form-group"><label for="settingsUsername">Username:</label><input type="text" id="settingsUsername" required minlength="3"></div>
+                        <div class="form-group"><label for="settingsFullName">Full Name:</label><input type="text" id="settingsFullName" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label for="settingsEmail">Email:</label><input type="email" id="settingsEmail" required></div>
+                        <div class="form-group"><label for="settingsPhone">Phone:</label><input type="tel" id="settingsPhone" required></div>
+                    </div>
+                    <div class="form-group"><label for="settingsAddress">Delivery Address:</label><textarea id="settingsAddress" rows="3" required></textarea></div>
+                    <button type="submit" class="btn btn-primary">Save Account Information</button>
+                    <button type="button" class="btn btn-secondary" onclick="goBackToShop()">Back to Shop</button>
+                    <div id="customerSettingsMessage" class="status-message"></div>
+                </form>
+            </div>
+
+            <!-- Customer Service Section -->
+            <div id="customerServiceSection" class="customer-service-section" style="display: none;">
+                <h2>Customer Service</h2>
+                <p>Send a message to the seller about your order or any concern.</p>
+                <form id="customerServiceForm" onsubmit="sendCustomerServiceMessage(event)">
+                    <div class="form-group">
+                        <label for="serviceOrderId">Order (optional):</label>
+                        <select id="serviceOrderId">
+                            <option value="">General concern</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceSubject">Subject:</label>
+                        <select id="serviceSubject" required>
+                            <option value="">Select a subject</option>
+                            <option value="Order status">Order status</option>
+                            <option value="Payment concern">Payment concern</option>
+                            <option value="Change order details">Change order details</option>
+                            <option value="Other concern">Other concern</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceMessage">Message:</label>
+                        <textarea id="serviceMessage" rows="6" required placeholder="Write your message to the seller..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message to Seller</button>
+                    <button type="button" class="btn btn-secondary" onclick="goBackToShop()">Back to Shop</button>
+                    <div id="customerServiceStatus" class="status-message"></div>
+                </form>
+            </div>
+
+            <!-- Checkout Section -->
+            <div id="checkoutSection" class="checkout-section" style="display: none;">
+                <h2>Checkout</h2>
+                <form id="checkoutForm" novalidate>
+                    <!-- Order Items Review -->
+                    <div style="background: #1f1f1f; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #3a3a3a;">
+                        <h3 style="color: #d4af37; margin-bottom: 15px;">📦 Order Items</h3>
+                        <div id="checkoutItemsList">
+                            <!-- Items will be displayed here -->
+                        </div>
+                    </div>
+                    
+                    <div class="measurements-section">
+                        <h3>Customer & Delivery Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customerName">Full Name:</label>
+                                <input type="text" id="customerName" required autocomplete="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="customerEmail">Email:</label>
+                                <input type="email" id="customerEmail" required autocomplete="email">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customerPhone">Phone:</label>
+                                <input type="tel" id="customerPhone" required autocomplete="tel">
+                            </div>
+                            <div class="form-group">
+                                <label for="customerAddress">Delivery Location:</label>
+                                <input type="text" id="customerAddress" required autocomplete="street-address">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkoutName">Name to Print:</label>
+                                <input type="text" id="checkoutName" placeholder="Enter name (optional)" maxlength="20">
+                                <small style="color: #a0a0a0;">e.g., JOHN, MARIA (max 20 characters)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkoutNumber">Jersey Number:</label>
+                                <input type="number" id="checkoutNumber" placeholder="Enter number (optional)" min="0" max="99">
+                                <small style="color: #a0a0a0;">e.g., 23, 10 (0-99)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Measurements & Size Chart -->
+                    <div class="measurements-section">
+                        <h3>Measurements & Size Information</h3>
+                        <p class="info-text">📏 Please provide your measurements for accurate sizing</p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="chestMeasurement">Chest (cm):</label>
+                                <input type="number" id="chestMeasurement" placeholder="e.g., 90" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="waistMeasurement">Waist (cm):</label>
+                                <input type="number" id="waistMeasurement" placeholder="e.g., 75" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lengthMeasurement">Length/Height (cm):</label>
+                            <input type="number" id="lengthMeasurement" placeholder="e.g., 170" min="0">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkoutSize">Order Size:</label>
+                                <select id="checkoutSize">
+                                    <option value="">-- Select Size --</option>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="2XL">2XL</option>
+                                    <option value="3XL">3XL</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkoutColor">Order Color:</label>
+                                <select id="checkoutColor">
+                                    <option value="">-- Select Color --</option>
+                                    <option value="Red">Red</option>
+                                    <option value="Blue">Blue</option>
+                                    <option value="Black">Black</option>
+                                    <option value="White">White</option>
+                                    <option value="Yellow">Yellow</option>
+                                    <option value="Green">Green</option>
+                                    <option value="Orange">Orange</option>
+                                    <option value="Purple">Purple</option>
+                                    <option value="Gray">Gray</option>
+                                    <option value="Navy">Navy Blue</option>
+                                    <option value="Maroon">Maroon</option>
+                                    <option value="Pink">Pink</option>
+                                    <option value="Cyan">Cyan</option>
+                                    <option value="Gold">Gold</option>
+                                    <option value="Silver">Silver</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="size-chart-helper">
+                            <h4>Size Chart Helper</h4>
+                            <div id="suggestedSize" class="size-suggestion" style="display: none;">
+                                <p><strong>Suggested Size:</strong> <span id="suggestedSizeText"></span></p>
+                                <p id="sizeNotes" style="color: #a0a0a0; font-size: 0.9em;"></p>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="calculateSuggestedSize()">Get Size Suggestion</button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method Section -->
+                    <div class="measurements-section" style="border: 2px solid #d4af37; background: rgba(212, 175, 55, 0.1); padding: 20px; border-radius: 5px;">
+                        <h3 style="color: #d4af37;">💳 Choose Payment Method</h3>
+                        <div class="form-group">
+                            <label for="paymentMethod" style="color: #d4af37; font-weight: 600;">Payment method:</label>
+                            <select id="paymentMethod" required onchange="updatePaymentMethodUI()">
+                                <option value="gcash">GCash</option>
+                                <option value="cod">Cash on Delivery (COD)</option>
+                            </select>
+                        </div>
+                        <p id="gcashPaymentInstruction" class="info-text" style="color: #ff6b6b; font-weight: 600;">⚠️ GCash proof of downpayment is required to place your order</p>
+                        
+                        <div id="gcashPaymentMessage" class="message" style="margin-top: 10px; display: none;"></div>
+                    </div>
+
+                    <div class="order-summary">
+                        <p>Total Amount: <strong>₱<span id="checkoutTotal">0.00</span></strong></p>
+                    </div>
+                    <button type="button" id="placeCustomerOrderButton" class="btn btn-primary" onclick="placeCustomerOrder(event)">Place Order</button>
+                    <button type="button" class="btn btn-secondary" onclick="toggleCart()">Cancel</button>
+                </form>
+            </div>
+
+            <div class="customer-service-footer">
+                <span>Need help with your order?</span>
+                <button type="button" class="btn btn-secondary" onclick="viewCustomerService()">Contact Customer Service</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminPage" class="page" style="display: none;">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <div class="navbar-emblem-container">
+                    <img id="adminNavbarLogo" src="" alt="Shop Logo" class="navbar-emblem">
+                </div>
+                <span id="adminDisplayName">Welcome, Admin!</span>
+                <span class="navbar-division">MNL KINGPIN / CAMSUR</span>
+            </div>
+            <div class="navbar-right">
+                <div class="nav-menu-scroll-wrapper">
+                    <button class="btn btn-secondary nav-menu-toggle admin-nav-menu-toggle" type="button" onclick="toggleAdminNavMenu()">☰ Menu</button>
+                    <div id="adminNavMenu" class="nav-menu-items" aria-label="Admin navigation menu">
+                        <button class="btn btn-secondary" onclick="showAdminTab('products')">Products</button>
+                        <button class="btn btn-secondary notification-btn" onclick="showAdminTab('orders')">Orders <span class="notification-badge" data-notification-badge="admin-orders" style="display:none;">0</span></button>
+                        <button class="btn btn-secondary notification-btn" onclick="showAdminTab('messages')">Messages <span class="notification-badge" data-notification-badge="admin-messages" style="display:none;">0</span></button>
+                        <button class="btn btn-secondary" onclick="showAdminTab('history')">History</button>
+                        <button class="btn btn-secondary" onclick="showAdminTab('reports')">Reports</button>
+                        <button class="btn btn-secondary" onclick="showAdminTab('settings')">Settings</button>
+                        <button class="btn btn-secondary theme-toggle" type="button" onclick="toggleTheme()" aria-label="Switch to light mode"><span class="theme-toggle-icon">☀️</span> <span class="theme-toggle-label">Light Mode</span></button>
+                        <button class="btn btn-danger" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="admin-container">
+            <!-- Products Management -->
+            <div id="productsTab" class="admin-tab">
+                <h2>Manage Products</h2>
+                
+                <div class="add-product-form">
+                    <h3>Add New Product</h3>
+                    <form id="addProductForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productName">Jersey/Item Name:</label>
+                                <input type="text" id="productName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="productType">Type/Purpose:</label>
+                                <select id="productType" required>
+                                    <option value="">-- Select Type --</option>
+                                    <option value="basketball">Basketball Jersey</option>
+                                    <option value="volleyball">Volleyball Jersey</option>
+                                    <option value="longsleeve">Warmer/Longsleeve</option>
+                                    <option value="varsity">Varsity Jacket</option>
+                                    <option value="rider">Rider Jersey</option>
+                                    <option value="tshirt">T-Shirt</option>
+                                    <option value="polo">Polo Shirt</option>
+                                    <option value="club">Club Uniform</option>
+                                    <option value="organization">Organization Uniform</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productPrice">Price (₱):</label>
+                                <input type="number" id="productPrice" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="productStock">Stock Quantity:</label>
+                                <input type="number" id="productStock" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productDescription">Description:</label>
+                            <textarea id="productDescription" rows="3"></textarea>
+                        </div>
+                        
+                        <!-- Color Availability -->
+                        <div class="form-group">
+                            <label>🎨 Available Colors in Stock:</label>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 10px;">
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Red"> Red
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Blue"> Blue
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Black"> Black
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="White"> White
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Yellow"> Yellow
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Green"> Green
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Orange"> Orange
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Purple"> Purple
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Gray"> Gray
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Navy"> Navy Blue
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Maroon"> Maroon
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Pink"> Pink
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Cyan"> Cyan
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Gold"> Gold
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="productColors" value="Silver"> Silver
+                                </label>
+                            </div>
+                            <small style="color: #a0a0a0; display: block; margin-top: 10px;">Select all colors available for this product</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productImage">Product Images (Multiple):</label>
+                            <input type="file" id="productImage" accept="image/*" multiple required>
+                            <small>Supported formats: JPG, PNG, GIF - Select multiple images</small>
+                            <div id="productImagePreview" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;"></div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Add Product</button>
+                    </form>
+                    
+                    <div id="uploadMessage" class="message"></div>
+                </div>
+
+                <!-- Edit Price Modal -->
+                <div id="editPriceModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Edit Product Price</h3>
+                            <span class="modal-close" onclick="closeEditPriceModal()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <p id="editProductInfo" style="font-weight: 600; margin-bottom: 15px;"></p>
+                            <div class="form-group">
+                                <label for="editPriceInput">New Price (₱):</label>
+                                <input type="number" id="editPriceInput" step="0.01" min="0" required>
+                            </div>
+                            <div id="editPriceMessage" class="message"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" onclick="saveEditedPrice()">Save Price</button>
+                            <button class="btn btn-secondary" onclick="closeEditPriceModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Inventory Management -->
+                <div style="margin-top: 40px; padding-top: 30px; border-top: 2px solid #3a3a3a;">
+                    <h3>📦 Product Inventory Management</h3>
+                    <p style="color: #a0a0a0; margin-bottom: 20px;">Manage all your manually added products</p>
+                    <div class="orders-table">
+                        <table id="adminProductsTable">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Type</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProductsList">
+                                <!-- Products will be displayed here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Edit Product Modal -->
+                <div id="editProductModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Edit Product</h3>
+                            <span class="modal-close" onclick="closeEditProductModal()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editProductName">Product Name:</label>
+                                    <input type="text" id="editProductName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editProductType">Type:</label>
+                                    <select id="editProductType" required>
+                                        <option value="">-- Select Type --</option>
+                                        <option value="basketball">Basketball Jersey</option>
+                                        <option value="volleyball">Volleyball Jersey</option>
+                                        <option value="longsleeve">Warmer/Longsleeve</option>
+                                        <option value="varsity">Varsity Jacket</option>
+                                        <option value="rider">Rider Jersey</option>
+                                        <option value="tshirt">T-Shirt</option>
+                                        <option value="polo">Polo Shirt</option>
+                                        <option value="club">Club Uniform</option>
+                                        <option value="organization">Organization Uniform</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editProductPrice">Price (₱):</label>
+                                    <input type="number" id="editProductPrice" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editProductStock">Stock:</label>
+                                    <input type="number" id="editProductStock" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editProductDescription">Description:</label>
+                                <textarea id="editProductDescription" rows="3"></textarea>
+                            </div>
+                            
+                            <!-- Color Availability in Edit Modal -->
+                            <div class="form-group">
+                                <label>🎨 Available Colors in Stock:</label>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 10px;">
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Red"> Red
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Blue"> Blue
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Black"> Black
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="White"> White
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Yellow"> Yellow
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Green"> Green
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Orange"> Orange
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Purple"> Purple
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Gray"> Gray
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Navy"> Navy Blue
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Maroon"> Maroon
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Pink"> Pink
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Cyan"> Cyan
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Gold"> Gold
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="editProductColors" value="Silver"> Silver
+                                    </label>
+                                </div>
+                                <small style="color: #a0a0a0; display: block; margin-top: 10px;">Select all colors available for this product</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="editProductImage">Change Product Images (optional - select multiple):</label>
+                                <div style="margin-top: 10px;">
+                                    <input type="file" id="editProductImage" accept="image/*" multiple>
+                                    <small style="color: #a0a0a0; display: block; margin-top: 5px;">Supported formats: JPG, PNG, GIF - Select multiple images to replace all</small>
+                                    <div id="editProductImagePreview" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;"></div>
+                                </div>
+                            </div>
+                            <div id="editProductMessage" class="message"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" onclick="saveProductEdit()">Save Changes</button>
+                            <button class="btn btn-secondary" onclick="closeEditProductModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Management -->
+            <div id="ordersTab" class="admin-tab" style="display: none;">
+                <h2>Manage Orders</h2>
+                
+                <div class="orders-table">
+                    <table id="ordersInventory">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Products</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Order Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersList">
+                            <!-- Orders will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Customer Messages -->
+            <div id="messagesTab" class="admin-tab" style="display: none;">
+                <h2>Customer Messages</h2>
+                <div class="admin-messages-layout">
+                    <div id="adminMessagesList" class="admin-message-list">
+                        <!-- Customer conversations will be listed here -->
+                    </div>
+                    <div id="adminMessageDetails" class="admin-message-details">
+                        <p class="message-empty-state">Select a message to view the conversation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Database Management -->
+            <div id="customersTab" class="admin-tab" style="display: none;">
+                <h2>Customer Database</h2>
+                <div class="history-controls">
+                    <input type="text" id="customerSearch" placeholder="Search by name or email..." class="search-input">
+                    <button class="btn btn-secondary" onclick="exportCustomersToCSV()">📥 Export Customers</button>
+                </div>
+                <div class="orders-table">
+                    <table id="customersTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Total Orders</th>
+                                <th>Total Spent</th>
+                                <th>Last Order</th>
+                                <th>Measurements</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersList">
+                            <!-- Customers will be displayed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- History Management -->
+            <div id="historyTab" class="admin-tab" style="display: none;">
+                <h2>Purchase History</h2>
+                <div class="history-controls">
+                    <select id="yearSelector" class="search-input" onchange="loadHistoryTable()">
+                        <option value="">All Years</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                    </select>
+                    <select id="monthSelector" class="search-input" onchange="loadHistoryTable()">
+                        <option value="all">All Months</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <input type="text" id="historySearch" placeholder="Search by customer name or order ID..." class="search-input">
+                    <button class="btn btn-secondary" onclick="exportHistoryToCSV()">📥 Export to CSV</button>
+                </div>
+                <div class="orders-table">
+                    <table id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Email</th>
+                                <th>Products</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Order Date</th>
+                                <th>Delivery Address</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyList">
+                            <!-- History will be displayed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Reports Management -->
+            <div id="reportsTab" class="admin-tab" style="display: none;">
+                <h2>Sales & Performance Reports</h2>
+                <div class="reports-container">
+                    <div class="report-card">
+                        <h3>Total Sales</h3>
+                        <p class="report-value">₱<span id="totalSales">0.00</span></p>
+                    </div>
+                    <div class="report-card">
+                        <h3>Total Orders</h3>
+                        <p class="report-value"><span id="totalOrders">0</span></p>
+                    </div>
+                    <div class="report-card">
+                        <h3>Total Customers</h3>
+                        <p class="report-value"><span id="totalCustomers">0</span></p>
+                    </div>
+                    <div class="report-card">
+                        <h3>Avg Order Value</h3>
+                        <p class="report-value">₱<span id="avgOrderValue">0.00</span></p>
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <h3>Top Selling Products</h3>
+                    <table id="topProductsTable">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Times Sold</th>
+                                <th>Total Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topProductsList">
+                            <!-- Top products will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="report-section">
+                    <h3>Sales by Status</h3>
+                    <table id="statusTable">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Count</th>
+                                <th>Total Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody id="statusList">
+                            <!-- Status data will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="report-section">
+                    <button class="btn btn-primary" onclick="generateFullReport()">Generate Full Report (PDF)</button>
+                </div>
+            </div>
+
+            <!-- Settings Management -->
+            <div id="settingsTab" class="admin-tab" style="display: none;">
+                <h2>Admin Settings</h2>
+                
+                <div class="settings-section">
+                    <h3>🎨 Shop Logo & Branding</h3>
+                    <form id="logoUploadForm" onsubmit="uploadShopLogo(event)">
+                        <div class="form-group">
+                            <label for="shopLogoFile">Upload Logo Image:</label>
+                            <input type="file" id="shopLogoFile" accept="image/*" required>
+                            <small>Supported formats: JPG, PNG, GIF (Recommended: Square image, at least 200x200px)</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shopLogoName">Shop Name:</label>
+                            <input type="text" id="shopLogoName" placeholder="Enter your shop name" value="KingPin Custom Ph® CamSur" required>
+                        </div>
+                        
+                        <div class="logo-preview" id="logoPreviewContainer" style="display: none;">
+                            <p class="logo-preview-title">Logo Preview</p>
+                            <div class="preview-device-switcher" role="group" aria-label="Preview device size">
+                                <button type="button" class="preview-device-btn active" data-preview-device="computer" onclick="setLogoPreviewDevice('computer')">Computer</button>
+                                <button type="button" class="preview-device-btn" data-preview-device="phone" onclick="setLogoPreviewDevice('phone')">Phone</button>
+                            </div>
+                            <div id="logoPreviewFrame" class="logo-preview-frame preview-computer">
+                                <img id="logoPreview" src="" alt="Logo Preview">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Update Logo & Name</button>
+                    </form>
+                    <div id="logoMessage" class="message"></div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>Change Admin Credentials</h3>
+                    <form id="credentialsForm" onsubmit="updateAdminCredentials(event)">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password:</label>
+                            <input type="password" id="currentPassword" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newUsername">New Username:</label>
+                            <input type="text" id="newUsername" required>
+                            <small>Leave blank to keep current username</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newPassword">New Password:</label>
+                            <input type="password" id="newPassword" required>
+                            <small>Minimum 6 characters</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password:</label>
+                            <input type="password" id="confirmPassword" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Update Credentials</button>
+                    </form>
+                    <div id="credentialsMessage" class="message"></div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>💳 GCash Payment QR Code</h3>
+                    <form id="gcashQRForm" onsubmit="uploadGCashQRCode(event)">
+                        <div class="form-group">
+                            <label for="adminGCashQRCode">Upload GCash QR Code (JPG, PNG, GIF):</label>
+                            <input type="file" id="adminGCashQRCode" accept="image/*" required>
+                            <small style="color: #a0a0a0; display: block; margin-top: 5px;">This QR code will be shown to all customers on their orders for payment</small>
+                        </div>
+                        
+                        <div id="gcashQRPreviewContainer" style="margin-top: 15px; display: none;">
+                            <p style="color: #d4af37; margin-bottom: 10px;">QR Code Preview:</p>
+                            <img id="adminGCashQRPreview" src="" alt="GCash QR Code" style="max-width: 200px; max-height: 200px; border: 1px solid #444; padding: 5px; border-radius: 5px;">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Update GCash QR Code</button>
+                    </form>
+                    <div id="gcashQRMessage" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeProductModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalProductImage" src="" alt="Product Image">
+                </div>
+                <div class="modal-details">
+                    <h2 id="modalProductName"></h2>
+                    <p id="modalProductCategory"></p>
+                    <p id="modalProductDescription"></p>
+                    <p class="price">Price: <strong>₱<span id="modalProductPrice"></span></strong></p>
+                    <p class="stock" id="modalProductStock"></p>
+                    
+                    <!-- Customer Ratings Section -->
+                    <div id="productRatingsSection" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #444;">
+                        <h4 style="color: #d4af37; margin-bottom: 15px;">⭐ Customer Ratings & Reviews</h4>
+                        
+                        <!-- Average Rating Display -->
+                        <div id="averageRatingDisplay" style="margin-bottom: 20px; padding: 15px; background: #222; border-radius: 5px; text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 8px;" id="averageRatingStars"></div>
+                            <p style="margin: 5px 0; color: #a0a0a0;"><span id="averageRatingScore">0</span> out of 5 stars (<span id="totalRatingsCount">0</span> reviews)</p>
+                            <p style="margin: 5px 0; color: #4caf50; font-size: 14px;">✓ <span id="successfulOrdersCount">0</span> verified purchases</p>
+                        </div>
+                        
+                        <!-- Individual Ratings List -->
+                        <div id="individualRatingsList" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; border: 1px solid #444; border-radius: 5px; padding: 10px;">
+                        </div>
+                        
+                        <!-- Add Rating Form -->
+                        <div id="addRatingForm" style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-radius: 5px;">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions" style="margin-top: 25px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <label for="modalProductQuantity" style="margin: 0; color: #e0e0e0; font-weight: 600;">Qty:</label>
+                            <input type="number" id="modalProductQuantity" value="1" min="1" style="width: 60px;">
+                        </div>
+                        <button class="btn btn-primary" onclick="addToCart()" style="flex: 1; min-width: 120px;">Add to Cart</button>
+                        <button class="btn btn-success" onclick="placeOrderDirect()" style="flex: 1; min-width: 120px; background-color: #4caf50;">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Customization Modal -->
+    <div id="editCustomizationModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close" onclick="closeEditCustomizationModal()">&times;</span>
+            <div class="modal-body">
+                <h2 style="color: #d4af37; margin-bottom: 20px;">Edit Jersey Customization</h2>
+                <div id="editCustomizationContent">
+                    <h3 id="editItemName" style="color: #e0e0e0; margin-bottom: 20px;"></h3>
+                    
+                    <div class="form-group">
+                        <label for="editCustomSize">Size:</label>
+                        <select id="editCustomSize" required>
+                            <option value="">-- Select Size --</option>
+                            <option value="XS">XS (Extra Small)</option>
+                            <option value="S">S (Small)</option>
+                            <option value="M">M (Medium)</option>
+                            <option value="L">L (Large)</option>
+                            <option value="XL">XL (Extra Large)</option>
+                            <option value="2XL">2XL (XXL)</option>
+                            <option value="3XL">3XL (XXXL)</option>
+                        </select>
+                        <small style="color: #a0a0a0;">Required - Select your preferred size</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editCustomColor">Color:</label>
+                        <select id="editCustomColor" required>
+                            <option value="">-- Select Color --</option>
+                            <option value="Red">Red</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Green">Green</option>
+                            <option value="Orange">Orange</option>
+                            <option value="Purple">Purple</option>
+                            <option value="Gray">Gray</option>
+                            <option value="Navy">Navy Blue</option>
+                            <option value="Maroon">Maroon</option>
+                            <option value="Pink">Pink</option>
+                            <option value="Cyan">Cyan</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Silver">Silver</option>
+                        </select>
+                        <small style="color: #a0a0a0;">Required - Select your desired color</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editCustomName">Name to Print:</label>
+                        <input type="text" id="editCustomName" placeholder="Enter name (optional)" maxlength="20">
+                        <small style="color: #a0a0a0;">e.g., JOHN, MARIA (max 20 characters)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editCustomNumber">Jersey Number:</label>
+                        <input type="number" id="editCustomNumber" placeholder="Enter number (optional)" min="0" max="99">
+                        <small style="color: #a0a0a0;">e.g., 23, 10 (0-99)</small>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="saveCustomizationEdit()" style="flex: 1;">Save Changes</button>
+                        <button class="btn btn-secondary" onclick="closeEditCustomizationModal()" style="flex: 1;">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js?v=20260902-receipt-color-final"></script>
+    <script src="js/design-interface.js?v=20260901-order-fix"></script>
+    <script>
+        // Force initialization when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                console.log('🚀 PAGE LOADED - Initializing system...');
+                
+                // Load products from storage immediately
+                if (typeof loadProductsFromStorage === 'function') {
+                    console.log('📍 Calling loadProductsFromStorage()...');
+                    loadProductsFromStorage();
+                    console.log('✅ loadProductsFromStorage() completed');
+                } else {
+                    console.error('❌ loadProductsFromStorage function not found!');
+                }
+                
+                // Check appData
+                if (typeof appData !== 'undefined') {
+                    console.log('✅ appData exists with', appData.products.length, 'products');
+                    if (typeof updateQuickLoginButton === 'function') {
+                        updateQuickLoginButton();
+                    }
+                } else {
+                    console.error('❌ appData not defined!');
+                }
+            } catch (e) {
+                console.error('❌ Initialization error:', e);
+            }
+        });
+        
+        // Keep the customer dashboard visible after refresh.
+        // Do not restore the login page on load.
+        window.addEventListener('load', () => {
+            try {
+                console.log('✅ Window fully loaded');
+
+                if (typeof checkSavedSession === 'function') {
+                    console.log('📍 Checking for saved session...');
+                    checkSavedSession();
+                }
+
+                setTimeout(() => {
+                    const loginPage = document.getElementById('loginPage');
+                    const customerPage = document.getElementById('customerPage');
+                    const adminPage = document.getElementById('adminPage');
+
+                    if (loginPage) loginPage.style.display = 'none';
+
+                    if (typeof appData !== 'undefined' && appData && appData.currentRole === 'admin') {
+                        if (customerPage) customerPage.style.display = 'none';
+                        if (adminPage) adminPage.style.display = 'block';
+                        console.log('✓ Showing admin dashboard');
+                    } else {
+                        if (customerPage) customerPage.style.display = 'block';
+                        if (adminPage) adminPage.style.display = 'none';
+                        console.log('✓ Showing customer dashboard');
+                    }
+                }, 100);
+            } catch (e) {
+                console.error('❌ Session check error:', e);
+                const loginPage = document.getElementById('loginPage');
+                const customerPage = document.getElementById('customerPage');
+                const adminPage = document.getElementById('adminPage');
+                if (loginPage) loginPage.style.display = 'none';
+                if (customerPage) customerPage.style.display = 'block';
+                if (adminPage) adminPage.style.display = 'none';
+            }
+        });
+    </script>
+
+<script>
+const savedLogo = localStorage.getItem('kingpinShopLogo');
+
+if (savedLogo) {
+    const loginLogo = document.getElementById('loginLogo');
+
+    if (loginLogo) {
+        loginLogo.src = savedLogo;
+    }
+}
+</script>
+
+<!-- Shared receipt modal for customer checkout and admin order details -->
+<div id="orderDetailsModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+        <div class="modal-header">
+            <h2>Order Details</h2>
+            <span class="modal-close" onclick="closeOrderDetailsModal()">&times;</span>
+        </div>
+        <div id="orderDetailsContent" class="modal-body">
+            <!-- Order details will be populated here -->
+        </div>
+        <div class="modal-footer" id="orderDetailsFooter"></div>
+    </div>
+</div>
+
+<!-- Floating Back to Shop Button -->
+<div id="floatingBackButton" class="floating-back-button">
+    <button onclick="goBackToShop()" title="Back to Shop">← Back to Shop</button>
+</div>
+
+</body>
+</html>

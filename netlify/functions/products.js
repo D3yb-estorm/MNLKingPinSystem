@@ -5,7 +5,10 @@ const { getStore } = require('@netlify/blobs');
 const productKey = 'catalog';
 
 function getProductsStore() {
-    return getStore('kingpin-products');
+    return getStore('kingpin-products', {
+        siteID: process.env.NETLIFY_SITE_ID,
+        token: process.env.NETLIFY_AUTH_TOKEN
+    });
 }
 
 function jsonResponse(statusCode, body) {

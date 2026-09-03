@@ -469,7 +469,7 @@ function loadProductsFromStorage() {
         }
     }
 
-    fetch('api/products.php', { cache: 'no-store' })
+    return fetch('api/products.php', { cache: 'no-store' })
         .then(response => {
             if (!response.ok) throw new Error(`Server returned ${response.status}`);
             return response.json();
@@ -485,6 +485,7 @@ function loadProductsFromStorage() {
         })
         .catch(error => {
             console.warn('Unable to load products from server; using local copy.', error);
+            return appData.products;
         });
 }
 
@@ -1343,7 +1344,7 @@ function showCustomerDashboard() {
     }, 150);
 }
 
-function showAdminDashboard() {
+async function showAdminDashboard() {
     document.getElementById('loginPage').style.display = 'none';
     document.getElementById('customerPage').style.display = 'none';
     document.getElementById('adminPage').style.display = 'block';
@@ -1354,6 +1355,7 @@ function showAdminDashboard() {
         console.error('Admin dashboard data initialization failed:', error);
     }
 
+    await loadProductsFromStorage();
     showAdminTab('products');
     loadAdminProducts();
     loadAdminOrders();

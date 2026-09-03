@@ -3799,6 +3799,26 @@ body.light-mode #adminPage .report-card {
         flex: 0 0 32px;
     }
 
+    #customerPage .nav-menu-items,
+    #adminPage .nav-menu-items {
+        top: 52px !important;
+        right: 8px !important;
+        width: 155px !important;
+        max-width: calc(100vw - 16px) !important;
+        min-width: 155px;
+        max-height: 270px;
+        gap: 4px;
+        padding: 6px;
+        border-radius: 8px;
+    }
+
+    #customerPage .nav-menu-items .btn,
+    #adminPage .nav-menu-items .btn {
+        min-height: 32px;
+        padding: 7px 9px;
+        font-size: .76rem;
+    }
+
     #customerPage .customer-cart-button {
         min-width: 38px;
         width: 38px !important;

@@ -1259,7 +1259,7 @@
         </div>
     </div>
 
-    <script src="js/app.js?v=20260902-receipt-color-final"></script>
+    <script src="js/app.js?v=20260903-login-start"></script>
     <script src="js/design-interface.js?v=20260901-order-fix"></script>
     <script>
         // Force initialization when page loads
@@ -1290,44 +1290,6 @@
             }
         });
         
-        // Keep the customer dashboard visible after refresh.
-        // Do not restore the login page on load.
-        window.addEventListener('load', () => {
-            try {
-                console.log('✅ Window fully loaded');
-
-                if (typeof checkSavedSession === 'function') {
-                    console.log('📍 Checking for saved session...');
-                    checkSavedSession();
-                }
-
-                setTimeout(() => {
-                    const loginPage = document.getElementById('loginPage');
-                    const customerPage = document.getElementById('customerPage');
-                    const adminPage = document.getElementById('adminPage');
-
-                    if (loginPage) loginPage.style.display = 'none';
-
-                    if (typeof appData !== 'undefined' && appData && appData.currentRole === 'admin') {
-                        if (customerPage) customerPage.style.display = 'none';
-                        if (adminPage) adminPage.style.display = 'block';
-                        console.log('✓ Showing admin dashboard');
-                    } else {
-                        if (customerPage) customerPage.style.display = 'block';
-                        if (adminPage) adminPage.style.display = 'none';
-                        console.log('✓ Showing customer dashboard');
-                    }
-                }, 100);
-            } catch (e) {
-                console.error('❌ Session check error:', e);
-                const loginPage = document.getElementById('loginPage');
-                const customerPage = document.getElementById('customerPage');
-                const adminPage = document.getElementById('adminPage');
-                if (loginPage) loginPage.style.display = 'none';
-                if (customerPage) customerPage.style.display = 'block';
-                if (adminPage) adminPage.style.display = 'none';
-            }
-        });
     </script>
 
 <script>

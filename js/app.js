@@ -2718,27 +2718,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const customerPage = document.getElementById('customerPage');
     const adminPage = document.getElementById('adminPage');
 
-    const forceLogin = localStorage.getItem('kingpinForceLogin') === '1';
-    if (forceLogin) {
-        localStorage.removeItem('kingpinCurrentSession');
-        localStorage.removeItem('kingpinQuickLoginUser');
-        localStorage.removeItem('kingpinForceLogin');
-        if (customerPage) customerPage.style.display = 'none';
-        if (adminPage) adminPage.style.display = 'none';
-        if (loginPage) loginPage.style.display = 'block';
-    } else {
-        const savedSession = loadCurrentSession();
-        const hasSavedCustomerSession = savedSession && savedSession.role === 'customer';
-        const hasSavedAdminSession = savedSession && savedSession.role === 'admin';
-
-        if (hasSavedCustomerSession || hasSavedAdminSession) {
-            checkSavedSession();
-        } else {
-            if (customerPage) customerPage.style.display = 'none';
-            if (adminPage) adminPage.style.display = 'none';
-            if (loginPage) loginPage.style.display = 'block';
-        }
-    }
+    // Always start from login when the website is opened or refreshed.
+    clearCurrentSession();
+    localStorage.removeItem('kingpinSession');
+    localStorage.removeItem('kingpinCurrentSession');
+    localStorage.removeItem('kingpinQuickLoginUser');
+    localStorage.removeItem('kingpinForceLogin');
+    if (customerPage) customerPage.style.display = 'none';
+    if (adminPage) adminPage.style.display = 'none';
+    if (loginPage) loginPage.style.display = 'block';
 
     const customerName = document.getElementById('customerDisplayName');
     if (customerName) {

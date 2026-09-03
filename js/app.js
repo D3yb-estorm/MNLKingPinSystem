@@ -459,6 +459,27 @@ function initializeData() {
 }
 
 // Load products from localStorage
+async function fetchSharedProducts() {
+    try {
+        const response = await fetch('api/products.php', { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Server returned ${response.status}`);
+
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) throw new Error('Product API is not available on this host');
+
+        const data = await response.json();
+        if (!Array.isArray(data.products)) throw new Error('Server returned invalid product data');
+        return data.products;
+    } catch (apiError) {
+        const response = await fetch('uploads/products.json', { cache: 'no-store' });
+        if (!response.ok) throw apiError;
+
+        const data = await response.json();
+        if (!Array.isArray(data.products)) throw apiError;
+        return data.products;
+    }
+}
+
 function loadProductsFromStorage() {
     const stored = localStorage.getItem('kingpinProducts');
     if (stored) {
@@ -469,15 +490,9 @@ function loadProductsFromStorage() {
         }
     }
 
-    return fetch('api/products.php', { cache: 'no-store' })
-        .then(response => {
-            if (!response.ok) throw new Error(`Server returned ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            if (!Array.isArray(data.products)) throw new Error('Server returned invalid product data');
-
-            appData.products = data.products;
+    return fetchSharedProducts()
+        .then(products => {
+            appData.products = products;
             localStorage.setItem('kingpinProducts', JSON.stringify(appData.products));
             displayProducts(appData.products);
             loadAdminProducts();
@@ -1793,14 +1808,8 @@ function saveProducts() {
 // Load Products for Customer
 async function loadProducts() {
     try {
-        const response = await fetch('api/products.php', { cache: 'no-store' });
-        if (!response.ok) throw new Error(`Server returned ${response.status}`);
-
-        const data = await response.json();
-        if (!Array.isArray(data.products)) throw new Error('Server returned invalid product data');
-
         // The server is shared by all customers, so it is the source of truth.
-        appData.products = data.products;
+        appData.products = await fetchSharedProducts();
         localStorage.setItem('kingpinProducts', JSON.stringify(appData.products));
     } catch (error) {
         console.warn('Unable to load shared products; using local copy.', error);

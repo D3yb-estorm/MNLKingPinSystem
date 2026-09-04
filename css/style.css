@@ -1940,6 +1940,25 @@ table tbody tr:hover {
         padding: 7px 5px;
         font-size: .72em;
     }
+
+    #customerPage .modal-content {
+        width: calc(100% - 24px);
+        margin: 3% auto;
+        max-height: 94vh;
+    }
+
+    #customerPage .modal-body {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px;
+    }
+
+    #customerPage .modal-image img {
+        width: 100%;
+        height: min(34vh, 220px);
+        object-fit: contain;
+    }
+
     .process-arrow {
         transform: rotate(90deg);
     }

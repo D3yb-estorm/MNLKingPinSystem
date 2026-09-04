@@ -1794,30 +1794,60 @@ function checkout() {
 
 // ===== PRODUCT MANAGEMENT =====
 
+function prepareProductImage(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = event => {
+            const image = new Image();
+            image.onload = () => {
+                const maxDimension = 1400;
+                const scale = Math.min(1, maxDimension / Math.max(image.width, image.height));
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.max(1, Math.round(image.width * scale));
+                canvas.height = Math.max(1, Math.round(image.height * scale));
+                canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL('image/jpeg', 0.82));
+            };
+            image.onerror = () => reject(new Error('Unable to read the selected image'));
+            image.src = event.target.result;
+        };
+        reader.onerror = () => reject(new Error('Unable to read the selected image'));
+        reader.readAsDataURL(file);
+    });
+}
+
 // Save products to localStorage
-function saveProducts() {
+async function saveProducts() {
     localStorage.setItem('kingpinProducts', JSON.stringify(appData.products));
     console.log('Products saved to localStorage:', appData.products);
 
-    fetch('api/products', {
+    const payload = JSON.stringify({ products: appData.products });
+    let response = await fetch('api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ products: appData.products })
-    }).then(response => {
-        const contentType = response.headers.get('content-type') || '';
-        if (response.ok && contentType.includes('application/json')) return response;
-        return fetch('api/products.php', {
+        body: payload
+    });
+
+    if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) {
+        response = await fetch('api/products.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ products: appData.products })
+            body: payload
         });
-    }).then(response => {
-        const contentType = response.headers.get('content-type') || '';
-        if (!response.ok || !contentType.includes('application/json')) {
-            throw new Error(`Shared product API unavailable (${response.status})`);
-        }
-        console.log('Products synced to shared server.');
-    }).catch(error => {
+    }
+
+    if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) {
+        throw new Error(`Shared product API unavailable (${response.status})`);
+    }
+
+    const result = await response.json();
+    if (result.ok !== true) throw new Error(result.error || 'Shared product sync failed');
+    console.log('Products synced to shared server.');
+    return true;
+}
+
+function saveProductsWithoutBlocking() {
+    saveProducts().catch(error => {
         console.warn('Unable to sync products to server; local copy was saved.', error);
     });
 }
@@ -1943,7 +1973,7 @@ function loadDefaultProducts() {
                 availableColors: ['Red', 'White', 'Black', 'Blue', 'Maroon', 'Gold']
             }
         ];
-        saveProducts();
+        saveProductsWithoutBlocking();
     }
 
 // Display Products
@@ -3009,7 +3039,7 @@ function processCustomerOrder() {
         
         // Save updated products to localStorage
         console.log('Saving products:', appData.products);
-        saveProducts();
+        saveProductsWithoutBlocking();
         
         appData.orders.push(orderData);
         saveOrders();
@@ -3731,9 +3761,7 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
         return;
     }
 
-    // Convert image to base64
-    const reader = new FileReader();
-    reader.onload = function(e) {
+    prepareProductImage(imageFile).then(image => {
         const newProduct = {
             id: appData.products.length + 1,
             name: productName,
@@ -3741,14 +3769,14 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
             price: price,
             stock: stock,
             description: description,
-            image: e.target.result, // Base64 image data
+            image,
             availableColors: availableColors
         };
 
         console.log('Adding new product:', newProduct);
         appData.products.push(newProduct);
         console.log('Total products after add:', appData.products.length);
-        saveProducts();
+        saveProductsWithoutBlocking();
         
         // Add product to table INSTANTLY (real-time display)
         addProductToInventoryTable(newProduct, appData.products.length - 1);
@@ -3764,8 +3792,11 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
         setTimeout(() => {
             uploadMessage.style.display = 'none';
         }, 2000);
-    };
-    reader.readAsDataURL(imageFile);
+    }).catch(error => {
+        uploadMessage.className = 'message error';
+        uploadMessage.textContent = error.message;
+        uploadMessage.style.display = 'block';
+    });
 });
 
 // Edit Product
@@ -3793,7 +3824,7 @@ function deleteProduct(index) {
     if (confirm(`Are you sure you want to delete "${productName}"?`)) {
         appData.products.splice(index, 1);
         console.log('Product deleted. Remaining products:', appData.products.length);
-        saveProducts();
+        saveProductsWithoutBlocking();
         loadAdminProducts();
         
         // Show success message
@@ -3866,7 +3897,7 @@ function saveEditedPrice() {
     console.log(`Product "${product.name}" price updated: ₱${oldPrice.toFixed(2)} → ₱${newPrice.toFixed(2)}`);
     
     // Save to storage
-    saveProducts();
+    saveProductsWithoutBlocking();
     
     // Show success message in modal
     messageDiv.className = 'message success';
@@ -4058,21 +4089,20 @@ function saveProductEdit() {
         return;
     }
     
-    // If an image file is selected, convert to base64 and update
+    // If an image file is selected, convert it to a compact shared image.
     if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
+        prepareProductImage(imageFile).then(image => {
             const product = appData.products[currentEditProductIndex];
             product.name = name;
             product.type = type;
             product.price = price;
             product.stock = stock;
             product.description = description;
-            product.image = e.target.result; // Update with new image
+            product.image = image;
             product.availableColors = availableColors;
             
             // Save to storage
-            saveProducts();
+            saveProductsWithoutBlocking();
             
             // Show success message
             messageDiv.className = 'message success';
@@ -4087,8 +4117,11 @@ function saveProductEdit() {
             setTimeout(() => {
                 closeEditProductModal();
             }, 1500);
-        };
-        reader.readAsDataURL(imageFile);
+        }).catch(error => {
+            messageDiv.className = 'message error';
+            messageDiv.textContent = error.message;
+            messageDiv.style.display = 'block';
+        });
     } else {
         // Update product without changing image
         const product = appData.products[currentEditProductIndex];
@@ -4100,7 +4133,7 @@ function saveProductEdit() {
         product.availableColors = availableColors;
         
         // Save to storage
-        saveProducts();
+        saveProductsWithoutBlocking();
         
         // Show success message
         messageDiv.className = 'message success';
@@ -4131,7 +4164,7 @@ function toggleProductStock(index) {
         // Mark as out of stock
         if (confirm(`Mark "${product.name}" as out of stock?`)) {
             product.stock = 0;
-            saveProducts();
+            saveProductsWithoutBlocking();
             loadAdminInventoryProducts();
             alert('✓ Product marked as out of stock');
         }
@@ -4140,7 +4173,7 @@ function toggleProductStock(index) {
         const quantity = prompt('Enter restock quantity:', '10');
         if (quantity !== null && !isNaN(quantity) && quantity > 0) {
             product.stock = parseInt(quantity);
-            saveProducts();
+            saveProductsWithoutBlocking();
             loadAdminInventoryProducts();
             alert(`✓ Product restocked with ${quantity} units`);
         }
@@ -4157,7 +4190,7 @@ function deleteAdminProduct(index) {
     const product = appData.products[index];
     if (confirm(`Are you sure you want to delete "${product.name}"? This cannot be undone.`)) {
         appData.products.splice(index, 1);
-        saveProducts();
+        saveProductsWithoutBlocking();
         loadAdminInventoryProducts();
         loadAdminProducts();
         alert('✓ Product deleted successfully');

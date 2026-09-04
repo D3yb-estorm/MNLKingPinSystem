@@ -2949,8 +2949,8 @@ table tbody tr:hover {
 .customer-service-section .form-group { margin-bottom: 16px; }
 .customer-service-section select,
 .customer-service-section textarea { width: 100%; box-sizing: border-box; }
-.customer-service-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 36px; padding: 18px 20px; border-top: 1px solid #3a3a3a; color: #a0a0a0; }
-.customer-service-footer .btn { margin: 0; }
+.customer-service-footer { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 24px; padding: 10px 0; border-top: 1px solid #3a3a3a; color: #a0a0a0; font-size: .85em; }
+.customer-service-footer .btn { margin: 0; padding: 7px 10px; font-size: .8em; }
 
 @media (min-width: 601px) and (max-width: 900px) {
     #loginPage { padding: 58px 14px 24px; }
@@ -3791,6 +3791,19 @@ body.light-mode #adminPage .report-card {
         width: 27px;
         height: 27px;
         border-radius: 6px;
+    }
+
+    #customerPage .customer-service-footer {
+        gap: 6px;
+        margin-top: 18px;
+        padding: 8px 0;
+        font-size: .7em;
+        white-space: nowrap;
+    }
+
+    #customerPage .customer-service-footer .btn {
+        padding: 6px 8px;
+        font-size: .78em;
     }
 
     #customerPage #customerDisplayName,

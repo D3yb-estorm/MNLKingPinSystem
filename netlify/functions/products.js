@@ -1,6 +1,6 @@
 const fs = require('fs/promises');
 const path = require('path');
-const { getStore } = require('@netlify/blobs');
+const { connectLambda, getStore } = require('@netlify/blobs');
 
 const productKey = 'catalog';
 
@@ -36,6 +36,8 @@ async function loadInitialProducts() {
 }
 
 exports.handler = async function handler(event) {
+    connectLambda(event);
+
     if (event.httpMethod === 'OPTIONS') {
         return jsonResponse(204, {});
     }

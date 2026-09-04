@@ -5,12 +5,6 @@ const { connectLambda, getStore } = require('@netlify/blobs');
 const productKey = 'catalog';
 
 function getProductsStore() {
-    if (process.env.NETLIFY_SITE_ID && process.env.NETLIFY_AUTH_TOKEN) {
-        return getStore('kingpin-products', {
-            siteID: process.env.NETLIFY_SITE_ID,
-            token: process.env.NETLIFY_AUTH_TOKEN
-        });
-    }
     return getStore('kingpin-products');
 }
 

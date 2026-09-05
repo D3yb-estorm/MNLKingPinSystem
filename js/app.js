@@ -527,6 +527,9 @@ function loadProductsFromStorage() {
     if (stored) {
         try {
             appData.products = JSON.parse(stored);
+            if (Array.isArray(appData.products)) {
+                displayProducts(appData.products);
+            }
         } catch (e) {
             console.error('Error loading products:', e);
         }
@@ -542,6 +545,9 @@ function loadProductsFromStorage() {
         })
         .catch(error => {
             console.warn('Unable to load products from server; using local copy.', error);
+            if (Array.isArray(appData.products) && appData.products.length > 0) {
+                displayProducts(appData.products);
+            }
             return appData.products;
         });
 }
@@ -1890,6 +1896,11 @@ function saveProductsWithoutBlocking() {
 
 // Load Products for Customer
 async function loadProducts() {
+    const cachedProducts = Array.isArray(appData.products) ? appData.products : [];
+    if (cachedProducts.length > 0) {
+        displayProducts(cachedProducts);
+    }
+
     try {
         // The server is shared by all customers, so it is the source of truth.
         appData.products = await fetchSharedProducts();

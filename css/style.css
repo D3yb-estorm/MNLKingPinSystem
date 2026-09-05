@@ -4339,6 +4339,10 @@ body.light-mode #customerPage .customer-service-footer .btn:focus-visible {
 
 /* Final mobile shop card sizing: readable text with no compressed content. */
 @media (max-width: 600px) {
+    body:not(.light-mode) #customerPage .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     #customerPage .customer-container {
         width: 100%;
         padding: 18px 10px 42px;

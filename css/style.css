@@ -4288,6 +4288,224 @@ body.light-mode #customerPage .customer-service-footer .btn:focus-visible {
     }
 }
 
+/* Unified light-mode readability for every customer workflow. */
+body.light-mode #customerPage #designSection,
+body.light-mode #customerPage #cartSection,
+body.light-mode #customerPage #ordersSection,
+body.light-mode #customerPage #purchaseHistorySection,
+body.light-mode #customerPage #notificationsSection,
+body.light-mode #customerPage #customerSettingsSection,
+body.light-mode #customerPage #customerServiceSection,
+body.light-mode #customerPage #checkoutSection,
+body.light-mode #customerPage #productModal .modal-content {
+    color: #263238 !important;
+}
+
+body.light-mode #customerPage #designSection,
+body.light-mode #customerPage #cartSection,
+body.light-mode #customerPage #ordersSection,
+body.light-mode #customerPage #purchaseHistorySection,
+body.light-mode #customerPage #notificationsSection,
+body.light-mode #customerPage #customerSettingsSection,
+body.light-mode #customerPage #customerServiceSection,
+body.light-mode #customerPage #checkoutSection {
+    background: #ffffff !important;
+    border-color: #cbd3d9 !important;
+    box-shadow: 0 16px 35px rgba(42, 52, 60, .1) !important;
+}
+
+body.light-mode #customerPage #designSection h2,
+body.light-mode #customerPage #designSection h3,
+body.light-mode #customerPage #designSection h4,
+body.light-mode #customerPage #cartSection h2,
+body.light-mode #customerPage #ordersSection h2,
+body.light-mode #customerPage #purchaseHistorySection h2,
+body.light-mode #customerPage #notificationsSection h2,
+body.light-mode #customerPage #customerSettingsSection h2,
+body.light-mode #customerPage #customerServiceSection h2,
+body.light-mode #customerPage #checkoutSection h2,
+body.light-mode #customerPage #checkoutSection h3,
+body.light-mode #customerPage #checkoutSection h4 {
+    color: #765500 !important;
+}
+
+body.light-mode #customerPage #designSection p,
+body.light-mode #customerPage #cartSection p,
+body.light-mode #customerPage #ordersSection p,
+body.light-mode #customerPage #purchaseHistorySection p,
+body.light-mode #customerPage #notificationsSection p,
+body.light-mode #customerPage #customerSettingsSection p,
+body.light-mode #customerPage #customerServiceSection p,
+body.light-mode #customerPage #checkoutSection p,
+body.light-mode #customerPage #designSection small,
+body.light-mode #customerPage #checkoutSection small {
+    color: #42515b !important;
+    opacity: 1 !important;
+}
+
+body.light-mode #customerPage #designSection label,
+body.light-mode #customerPage #cartSection label,
+body.light-mode #customerPage #ordersSection label,
+body.light-mode #customerPage #purchaseHistorySection label,
+body.light-mode #customerPage #notificationsSection label,
+body.light-mode #customerPage #customerSettingsSection label,
+body.light-mode #customerPage #customerServiceSection label,
+body.light-mode #customerPage #checkoutSection label {
+    color: #263238 !important;
+}
+
+body.light-mode #customerPage #designSection input,
+body.light-mode #customerPage #designSection select,
+body.light-mode #customerPage #designSection textarea,
+body.light-mode #customerPage #customerSettingsSection input,
+body.light-mode #customerPage #customerSettingsSection select,
+body.light-mode #customerPage #customerSettingsSection textarea,
+body.light-mode #customerPage #customerServiceSection input,
+body.light-mode #customerPage #customerServiceSection select,
+body.light-mode #customerPage #customerServiceSection textarea,
+body.light-mode #customerPage #checkoutSection input,
+body.light-mode #customerPage #checkoutSection select,
+body.light-mode #customerPage #checkoutSection textarea {
+    background: #ffffff !important;
+    border-color: #aebac3 !important;
+    color: #263238 !important;
+}
+
+body.light-mode #customerPage #designSection input::placeholder,
+body.light-mode #customerPage #designSection textarea::placeholder,
+body.light-mode #customerPage #customerSettingsSection input::placeholder,
+body.light-mode #customerPage #customerSettingsSection textarea::placeholder,
+body.light-mode #customerPage #customerServiceSection textarea::placeholder,
+body.light-mode #customerPage #checkoutSection input::placeholder,
+body.light-mode #customerPage #checkoutSection textarea::placeholder {
+    color: #697780 !important;
+    opacity: 1 !important;
+}
+
+body.light-mode #customerPage #checkoutSection .checkout-item,
+body.light-mode #customerPage #checkoutSection .order-summary,
+body.light-mode #customerPage #checkoutSection .measurements-section,
+body.light-mode #customerPage #checkoutSection .size-chart-helper,
+body.light-mode #customerPage #checkoutSection .customization-section,
+body.light-mode #customerPage #customerSettingsSection .settings-section {
+    background: #f1f4f6 !important;
+    border-color: #d0d7dc !important;
+    color: #35434c !important;
+}
+
+body.light-mode #customerPage #checkoutSection [style*="background: #1f1f1f"],
+body.light-mode #customerPage #checkoutSection [style*="background: #2a2a2a"],
+body.light-mode #customerPage #designSection [style*="background: #1f1f1f"],
+body.light-mode #customerPage #designSection [style*="background: #2a2a2a"] {
+    background: #f1f4f6 !important;
+    border-color: #d0d7dc !important;
+}
+
+body.light-mode #customerPage #ordersList .order-item,
+body.light-mode #customerPage #purchaseHistoryList .order-item,
+body.light-mode #customerPage #notificationsList .notification-item {
+    background: #f1f4f6 !important;
+    border-color: #d0d7dc !important;
+    color: #35434c !important;
+}
+
+body.light-mode #customerPage #ordersList .order-item strong,
+body.light-mode #customerPage #purchaseHistoryList .order-item strong,
+body.light-mode #customerPage #notificationsList .notification-item strong,
+body.light-mode #customerPage #ordersList .order-id,
+body.light-mode #customerPage #purchaseHistoryList .order-id {
+    color: #263238 !important;
+}
+
+body.light-mode #customerPage .order-tracking,
+body.light-mode #customerPage .order-details,
+body.light-mode #customerPage .tracking-label,
+body.light-mode #customerPage .notification-timestamp,
+body.light-mode #customerPage .empty-cart {
+    color: #42515b !important;
+}
+
+body.light-mode #customerPage .order-tracking,
+body.light-mode #customerPage .order-details {
+    background: #f1f4f6 !important;
+    border-color: #d0d7dc !important;
+}
+
+body.light-mode #customerPage .design-mode-content,
+body.light-mode #customerPage .clothing-design-form,
+body.light-mode #customerPage .preset-card,
+body.light-mode #customerPage .upload-design-container,
+body.light-mode #customerPage .clothing-type-btn,
+body.light-mode #customerPage .design-mode-btn {
+    background: #f1f4f6 !important;
+    border-color: #d0d7dc !important;
+    color: #35434c !important;
+}
+
+body.light-mode #customerPage .design-mode-content h3,
+body.light-mode #customerPage .clothing-design-form h4,
+body.light-mode #customerPage .preset-info h4,
+body.light-mode #customerPage .upload-design-container label,
+body.light-mode #customerPage .design-mode-selector h3 {
+    color: #765500 !important;
+}
+
+body.light-mode #customerPage .status-message.success,
+body.light-mode #customerPage .status-message.error,
+body.light-mode #customerPage .message.success,
+body.light-mode #customerPage .message.error {
+    opacity: 1 !important;
+}
+
+body.light-mode #productModal .modal-details,
+body.light-mode #editCustomizationModal .modal-content {
+    color: #263238 !important;
+}
+
+body.light-mode #productModal .modal-details h2,
+body.light-mode #productModal .modal-details h4,
+body.light-mode #editCustomizationModal h2,
+body.light-mode #editCustomizationModal h3 {
+    color: #765500 !important;
+}
+
+body.light-mode #productModal .modal-details p,
+body.light-mode #productModal .modal-details label,
+body.light-mode #editCustomizationModal label,
+body.light-mode #editCustomizationModal small {
+    color: #42515b !important;
+    opacity: 1 !important;
+}
+
+body.light-mode #productModal [style*="background: #222"],
+body.light-mode #productModal [style*="background: #1a1a1a"] {
+    background: #f1f4f6 !important;
+    border-color: #d0d7dc !important;
+    color: #35434c !important;
+}
+
+body.light-mode #productModal #productRatingsSection,
+body.light-mode #productModal #individualRatingsList {
+    border-color: #d0d7dc !important;
+}
+
+body.light-mode #productModal [style*="color: #a0a0a0"],
+body.light-mode #productModal [style*="color: #e0e0e0"],
+body.light-mode #editCustomizationModal [style*="color: #e0e0e0"],
+body.light-mode #editCustomizationModal [style*="color: #a0a0a0"] {
+    color: #42515b !important;
+}
+
+body.light-mode #productModal input,
+body.light-mode #productModal select,
+body.light-mode #editCustomizationModal input,
+body.light-mode #editCustomizationModal select,
+body.light-mode #editCustomizationModal textarea {
+    background: #ffffff !important;
+    border-color: #aebac3 !important;
+    color: #263238 !important;
+}
+
 /* Prevent the admin inventory columns from collapsing into each other on phones. */
 #adminPage .products-table {
     overflow-x: auto;

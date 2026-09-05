@@ -2438,7 +2438,7 @@ function addToCart() {
         if (customNumber) customMsg += `#${customNumber}`;
     }
 
-    alert(`${appData.selectedProduct.name}${customMsg} added to cart!`);
+    showStatusUpdateToast(`${appData.selectedProduct.name}${customMsg} added to cart!`);
     closeProductModal();
     updateCartCount();
     saveUserCart();  // Save cart to localStorage

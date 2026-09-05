@@ -2082,7 +2082,7 @@ function displayProducts(products) {
         };
 
         productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-image" loading="eager" decoding="async">
+            <img src="${product.image}" alt="${product.name}" class="product-image" loading="eager" fetchpriority="high" decoding="async">
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p style="color: #4a9eff; font-weight: 600; margin-bottom: 8px;">${typeLabels[product.type] || product.type}</p>

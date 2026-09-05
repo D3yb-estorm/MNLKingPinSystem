@@ -4616,3 +4616,22 @@ body.light-mode #editCustomizationModal textarea {
         line-height: 1.15;
     }
 }
+
+body.light-mode #customerPage .btn-secondary,
+body.light-mode #customerPage .design-mode-btn:not(.active),
+body.light-mode #customerPage .clothing-type-btn:not(.active) {
+    background: #f1f4f6 !important;
+    border: 1px solid #aebac3 !important;
+    color: #263238 !important;
+    opacity: 1 !important;
+    box-shadow: 0 2px 8px rgba(42, 52, 60, .08);
+}
+
+body.light-mode #customerPage .btn-secondary:hover,
+body.light-mode #customerPage .btn-secondary:focus-visible,
+body.light-mode #customerPage .design-mode-btn:not(.active):hover,
+body.light-mode #customerPage .clothing-type-btn:not(.active):hover {
+    background: #ffffff !important;
+    border-color: #b78300 !important;
+    color: #172027 !important;
+}

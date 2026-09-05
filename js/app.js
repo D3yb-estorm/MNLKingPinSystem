@@ -468,7 +468,6 @@ function checkSavedSession() {
                 document.getElementById('customerPage').style.display = 'none';
                 document.getElementById('adminPage').style.display = 'block';
                 showAdminTab('products');
-                loadAdminProducts();
                 loadAdminOrders();
                 
                 setTimeout(() => {
@@ -556,7 +555,6 @@ function loadProductsFromStorage() {
             localStorage.setItem('kingpinProducts', JSON.stringify(appData.products));
             displayProducts(appData.products);
             if (appData.currentRole === 'admin') {
-                loadAdminProducts();
                 loadAdminInventoryProducts();
             }
         })
@@ -1437,7 +1435,6 @@ async function showAdminDashboard() {
 
     await loadProductsFromStorage();
     showAdminTab('products');
-    loadAdminProducts();
     loadAdminOrders();
     updateFloatingBackButton();
     
@@ -1461,7 +1458,6 @@ function showAdminTab(tabName) {
     // Load data when tabs are clicked
     if (tabName === 'products') {
         console.log('Loading products tab. Current appData.products:', appData.products);
-        loadAdminProducts();
         loadAdminInventoryProducts();
     } else if (tabName === 'orders') {
         loadNotifications();
@@ -3694,65 +3690,6 @@ function uploadOrderPaymentProof(orderId, input) {
 
 // ===== ADMIN FUNCTIONS =====
 
-// Load Admin Products
-function loadAdminProducts() {
-    if (appData.currentRole !== 'admin') return;
-
-    const productsList = document.querySelector('#adminPage #productsList');
-    const productsTableSection = document.querySelector('#adminPage .products-table');
-    if (!productsList || !productsTableSection) return;
-
-    productsList.innerHTML = '';
-
-    const typeLabels = {
-        'basketball': '🏀 Basketball Jersey',
-        'volleyball': '🏐 Volleyball Jersey',
-        'longsleeve': '👕 Longsleeve Warmer',
-        'varsity': '🎓 Varsity Jacket',
-        'rider': '🏍️ Rider Jersey',
-        'tshirt': '👕 T-Shirt',
-        'polo': '👔 Polo Shirt',
-        'club': '⚽ Club Uniform',
-        'organization': '🏢 Organization Uniform'
-    };
-
-    console.log('loadAdminProducts called with', appData.products.length, 'products');
-
-    if (appData.products.length === 0) {
-        // Hide the products table section if no products
-        if (productsTableSection) {
-            productsTableSection.style.display = 'none';
-        }
-        console.log('No products - hiding products table section');
-        return;
-    }
-
-    // Show the products table section if there are products
-    if (productsTableSection) {
-        productsTableSection.style.display = 'block';
-    }
-
-    appData.products.forEach((product, index) => {
-        const row = document.createElement('tr');
-        const typeDisplay = typeLabels[product.type] || product.type || 'N/A';
-        row.innerHTML = `
-            <td><img src="${product.image}" alt="${product.name}" class="product-thumbnail"></td>
-            <td>${product.name}</td>
-            <td>${typeDisplay}</td>
-            <td>₱${product.price.toFixed(2)}</td>
-            <td><strong>${product.stock}</strong></td>
-            <td>
-                <div class="action-buttons">
-                    <button class="btn-edit" onclick="editPrice(${index})" title="Edit Price">💰 Price</button>
-                    <button class="btn-edit" onclick="editProduct(${index})">Edit</button>
-                    <button class="btn-delete" onclick="deleteProduct(${index})">Delete</button>
-                </div>
-            </td>
-        `;
-        document.getElementById('productsList').appendChild(row);
-    });
-}
-
 // Add new product to inventory table in real-time (with animation)
 function addProductToInventoryTable(product, index) {
     const typeLabels = {
@@ -3896,7 +3833,6 @@ function deleteProduct(index) {
         appData.products.splice(index, 1);
         console.log('Product deleted. Remaining products:', appData.products.length);
         saveProductsWithoutBlocking();
-        loadAdminProducts();
         
         // Show success message
         const uploadMessage = document.getElementById('uploadMessage');
@@ -3976,7 +3912,6 @@ function saveEditedPrice() {
     messageDiv.style.display = 'block';
     
     // Refresh table
-    loadAdminProducts();
     
     // Close modal after 1.5 seconds
     setTimeout(() => {
@@ -4182,7 +4117,6 @@ function saveProductEdit() {
             
             // Reload inventory table
             loadAdminInventoryProducts();
-            loadAdminProducts();
             
             // Close modal after 1.5 seconds
             setTimeout(() => {
@@ -4213,7 +4147,6 @@ function saveProductEdit() {
         
         // Reload inventory table
         loadAdminInventoryProducts();
-        loadAdminProducts();
         
         // Close modal after 1.5 seconds
         setTimeout(() => {
@@ -4263,7 +4196,6 @@ function deleteAdminProduct(index) {
         appData.products.splice(index, 1);
         saveProductsWithoutBlocking();
         loadAdminInventoryProducts();
-        loadAdminProducts();
         alert('✓ Product deleted successfully');
     }
 }

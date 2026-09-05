@@ -494,30 +494,32 @@ function initializeData() {
 
 // Load products from localStorage
 async function fetchSharedProducts() {
-    try {
-        const response = await fetch('api/products', { cache: 'no-store' });
-        if (!response.ok) throw new Error(`Server returned ${response.status}`);
+    const endpoints = ['api/products', 'api/products.php', '/.netlify/functions/products'];
+    let lastError = new Error('Product API is not available on this host');
 
-        const contentType = response.headers.get('content-type') || '';
-        if (!contentType.includes('application/json')) throw new Error('Product API is not available on this host');
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(endpoint, { cache: 'no-store' });
+            const contentType = response.headers.get('content-type') || '';
+            if (!response.ok || !contentType.includes('application/json')) {
+                lastError = new Error(`Product API returned ${response.status}`);
+                continue;
+            }
 
-        const data = await response.json();
-        if (!Array.isArray(data.products)) throw new Error('Server returned invalid product data');
-        return data.products;
-    } catch (apiError) {
-        const response = await fetch('api/products.php', { cache: 'no-store' });
-        if (response.ok && (response.headers.get('content-type') || '').includes('application/json')) {
             const data = await response.json();
             if (Array.isArray(data.products)) return data.products;
+            lastError = new Error('Product API returned invalid product data');
+        } catch (error) {
+            lastError = error;
         }
-
-        const staticResponse = await fetch('uploads/products.json', { cache: 'no-store' });
-        if (!staticResponse.ok) throw apiError;
-
-        const data = await staticResponse.json();
-        if (!Array.isArray(data.products)) throw apiError;
-        return data.products;
     }
+
+    const staticResponse = await fetch('uploads/products.json', { cache: 'no-store' });
+    if (!staticResponse.ok) throw lastError;
+
+    const data = await staticResponse.json();
+    if (!Array.isArray(data.products)) throw lastError;
+    return data.products;
 }
 
 function loadProductsFromStorage() {
@@ -1856,28 +1858,28 @@ async function saveProducts() {
     console.log('Products saved to localStorage:', appData.products);
 
     const payload = JSON.stringify({ products: appData.products });
-    let response = await fetch('api/products', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: payload
-    });
+    const endpoints = ['api/products', 'api/products.php', '/.netlify/functions/products'];
 
-    if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) {
-        response = await fetch('api/products.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: payload
-        });
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload
+            });
+            if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) continue;
+
+            const result = await response.json();
+            if (result.ok === true) {
+                console.log('Products synced to shared server.');
+                return true;
+            }
+        } catch (error) {
+            console.warn(`Unable to sync products through ${endpoint}:`, error);
+        }
     }
 
-    if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) {
-        throw new Error(`Shared product API unavailable (${response.status})`);
-    }
-
-    const result = await response.json();
-    if (result.ok !== true) throw new Error(result.error || 'Shared product sync failed');
-    console.log('Products synced to shared server.');
-    return true;
+    throw new Error('Shared product API unavailable');
 }
 
 function saveProductsWithoutBlocking() {

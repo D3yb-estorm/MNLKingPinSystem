@@ -3726,8 +3726,9 @@ function addProductToInventoryTable(product, index) {
     `;
     
     // Add to top of table with animation
-    const productsList = document.getElementById('productsList');
-    productsList.insertBefore(row, productsList.firstChild);
+    const adminProductsList = document.getElementById('adminProductsList');
+    if (!adminProductsList) return;
+    adminProductsList.insertBefore(row, adminProductsList.firstChild);
     
     // Trigger animation (highlight effect)
     setTimeout(() => {

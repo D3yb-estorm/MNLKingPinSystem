@@ -4300,3 +4300,60 @@ body.light-mode #customerPage .customer-cart-button:focus-visible {
         padding: 14px;
     }
 }
+
+/* Final mobile shop card sizing: readable text with no compressed content. */
+@media (max-width: 600px) {
+    #customerPage .customer-container {
+        width: 100%;
+        padding: 18px 10px 42px;
+    }
+
+    #customerPage .products-section {
+        width: 100%;
+        padding: 14px;
+    }
+
+    #customerPage .products-grid {
+        width: 100%;
+        gap: 14px;
+    }
+
+    #customerPage .product-card {
+        width: 100%;
+    }
+
+    #customerPage .product-info {
+        padding: 14px;
+    }
+
+    #customerPage .product-info h3 {
+        font-size: 1.05rem;
+        line-height: 1.35;
+        margin-bottom: 7px;
+    }
+
+    #customerPage .product-info p {
+        font-size: .9rem;
+        line-height: 1.4;
+        margin-bottom: 8px;
+    }
+
+    #customerPage .product-price {
+        font-size: 1.2rem;
+        line-height: 1.35;
+        margin-bottom: 8px;
+    }
+
+    #customerPage .product-stock {
+        font-size: .9rem;
+        line-height: 1.35;
+        margin-bottom: 10px;
+    }
+
+    #customerPage .product-info .btn-small {
+        min-height: 42px;
+        padding: 10px 8px;
+        font-size: .88rem;
+        line-height: 1.2;
+    }
+}

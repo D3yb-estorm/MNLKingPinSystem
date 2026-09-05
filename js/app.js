@@ -3696,8 +3696,12 @@ function uploadOrderPaymentProof(orderId, input) {
 
 // Load Admin Products
 function loadAdminProducts() {
-    const productsList = document.getElementById('productsList');
-    const productsTableSection = document.querySelector('.products-table');
+    if (appData.currentRole !== 'admin') return;
+
+    const productsList = document.querySelector('#adminPage #productsList');
+    const productsTableSection = document.querySelector('#adminPage .products-table');
+    if (!productsList || !productsTableSection) return;
+
     productsList.innerHTML = '';
 
     const typeLabels = {

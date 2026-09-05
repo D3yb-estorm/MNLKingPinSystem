@@ -555,8 +555,10 @@ function loadProductsFromStorage() {
             appData.products = products;
             localStorage.setItem('kingpinProducts', JSON.stringify(appData.products));
             displayProducts(appData.products);
-            loadAdminProducts();
-            loadAdminInventoryProducts();
+            if (appData.currentRole === 'admin') {
+                loadAdminProducts();
+                loadAdminInventoryProducts();
+            }
         })
         .catch(error => {
             console.warn('Unable to load products from server; using local copy.', error);
@@ -2071,7 +2073,7 @@ function displayProducts(products) {
         };
 
         productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy" decoding="async">
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p style="color: #4a9eff; font-weight: 600; margin-bottom: 8px;">${typeLabels[product.type] || product.type}</p>

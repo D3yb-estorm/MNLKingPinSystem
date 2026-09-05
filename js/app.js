@@ -297,6 +297,40 @@ function loadOrders() {
     }
 }
 
+async function fetchSharedOrders() {
+    const endpoints = ['api/orders', 'api/orders.php', '/.netlify/functions/orders'];
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(endpoint, { cache: 'no-store' });
+            if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) continue;
+            const result = await response.json();
+            if (Array.isArray(result.orders)) return result.orders;
+        } catch (error) {
+            console.warn(`Unable to load shared orders from ${endpoint}:`, error);
+        }
+    }
+    throw new Error('Shared order API unavailable');
+}
+
+async function saveOrderToSharedServer(order) {
+    const endpoints = ['api/orders', 'api/orders.php', '/.netlify/functions/orders'];
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(order)
+            });
+            if (!response.ok || !(response.headers.get('content-type') || '').includes('application/json')) continue;
+            const result = await response.json();
+            if (result.ok === true) return true;
+        } catch (error) {
+            console.warn(`Unable to save shared order to ${endpoint}:`, error);
+        }
+    }
+    throw new Error('Shared order API unavailable');
+}
+
 // Save notifications to localStorage
 function saveNotifications() {
     localStorage.setItem('kingpinNotification', JSON.stringify(appData.notifications));
@@ -3043,6 +3077,9 @@ function processCustomerOrder() {
         
         appData.orders.push(orderData);
         saveOrders();
+        saveOrderToSharedServer(orderData).catch(error => {
+            console.error('Order was saved locally but not shared with admin:', error);
+        });
         saveOrderToHistory({ ...orderData }, false);
         appData.cart = [];
         
@@ -4211,8 +4248,27 @@ window.onload = function() {
 
 // Load Admin Orders
 function loadAdminOrders() {
-    const ordersList = document.getElementById('adminOrdersList');
     loadOrders();
+    renderAdminOrders();
+    fetchSharedOrders().then(sharedOrders => {
+        const sharedIds = new Set(sharedOrders.map(order => String(order.id)));
+        const localOnlyOrders = appData.orders.filter(order => !sharedIds.has(String(order.id)));
+        appData.orders = [...sharedOrders, ...localOnlyOrders];
+        saveOrders();
+        localOnlyOrders.forEach(order => {
+            saveOrderToSharedServer(order).catch(error => {
+                console.error('Unable to migrate local order to shared storage:', error);
+            });
+        });
+        renderAdminOrders();
+    }).catch(error => {
+        console.warn('Using local orders because shared orders could not be loaded:', error);
+    });
+}
+
+function renderAdminOrders() {
+    const ordersList = document.getElementById('adminOrdersList');
+    if (!ordersList) return;
     ordersList.innerHTML = '';
 
     const activeOrders = [...appData.orders]

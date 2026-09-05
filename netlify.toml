@@ -9,6 +9,12 @@
   force = true
 
 [[redirects]]
+  from = "/api/orders"
+  to = "/.netlify/functions/orders"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/admin"
   to = "/admin.html"
   status = 200

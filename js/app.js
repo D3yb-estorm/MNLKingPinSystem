@@ -22,6 +22,8 @@ const appData = {
     }
 };
 
+let sharedProductsRequest = null;
+
 function applyTheme(theme) {
     const isLight = theme === 'light';
     document.body.classList.toggle('light-mode', isLight);
@@ -493,33 +495,46 @@ function initializeData() {
 }
 
 // Load products from localStorage
-async function fetchSharedProducts() {
-    const endpoints = ['api/products', 'api/products.php', '/.netlify/functions/products'];
-    let lastError = new Error('Product API is not available on this host');
+function fetchSharedProducts() {
+    if (sharedProductsRequest) return sharedProductsRequest;
 
-    for (const endpoint of endpoints) {
-        try {
-            const response = await fetch(endpoint, { cache: 'no-store' });
-            const contentType = response.headers.get('content-type') || '';
-            if (!response.ok || !contentType.includes('application/json')) {
-                lastError = new Error(`Product API returned ${response.status}`);
-                continue;
+    const isLocalServer = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const endpoints = isLocalServer
+        ? ['api/products.php', 'api/products']
+        : ['api/products', '/.netlify/functions/products', 'api/products.php'];
+
+    sharedProductsRequest = (async () => {
+        let lastError = new Error('Product API is not available on this host');
+
+        for (const endpoint of endpoints) {
+            try {
+                const response = await fetch(endpoint, { cache: 'no-store' });
+                const contentType = response.headers.get('content-type') || '';
+                if (!response.ok || !contentType.includes('application/json')) {
+                    lastError = new Error(`Product API returned ${response.status}`);
+                    continue;
+                }
+
+                const data = await response.json();
+                if (Array.isArray(data.products)) return data.products;
+                lastError = new Error('Product API returned invalid product data');
+            } catch (error) {
+                lastError = error;
             }
-
-            const data = await response.json();
-            if (Array.isArray(data.products)) return data.products;
-            lastError = new Error('Product API returned invalid product data');
-        } catch (error) {
-            lastError = error;
         }
-    }
 
-    const staticResponse = await fetch('uploads/products.json', { cache: 'no-store' });
-    if (!staticResponse.ok) throw lastError;
+        const staticResponse = await fetch('uploads/products.json', { cache: 'no-store' });
+        if (!staticResponse.ok) throw lastError;
 
-    const data = await staticResponse.json();
-    if (!Array.isArray(data.products)) throw lastError;
-    return data.products;
+        const data = await staticResponse.json();
+        if (!Array.isArray(data.products)) throw lastError;
+        return data.products;
+    })().catch(error => {
+        sharedProductsRequest = null;
+        throw error;
+    });
+
+    return sharedProductsRequest;
 }
 
 function loadProductsFromStorage() {

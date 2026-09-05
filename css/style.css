@@ -3953,6 +3953,65 @@ body.light-mode #customerPage .product-info .btn-small {
     }
 }
 
+/* Light-mode navigation and customer service contrast. */
+body.light-mode #customerPage .nav-menu-items,
+body.light-mode #adminPage .nav-menu-items {
+    background: rgba(255, 255, 255, .99);
+    border-color: #b78300;
+    box-shadow: 0 14px 30px rgba(42, 52, 60, .2);
+}
+
+body.light-mode #customerPage .nav-menu-items .btn,
+body.light-mode #adminPage .nav-menu-items .btn {
+    background: #f1f4f6;
+    border-color: #c4cdd4;
+    color: #263238;
+    opacity: 1;
+}
+
+body.light-mode #customerPage .nav-menu-items .btn:hover,
+body.light-mode #adminPage .nav-menu-items .btn:hover {
+    background: #e1e7eb;
+    border-color: #b78300;
+    color: #172027;
+}
+
+body.light-mode #customerPage .customer-service-section {
+    background: #ffffff;
+    border-color: #cbd3d9;
+    box-shadow: 0 14px 32px rgba(42, 52, 60, .1);
+    color: #263238;
+}
+
+body.light-mode #customerPage .customer-service-section h2,
+body.light-mode #customerPage .customer-service-section label {
+    color: #263238 !important;
+}
+
+body.light-mode #customerPage .customer-service-section p,
+body.light-mode #customerPage .customer-service-footer {
+    color: #42515b !important;
+    opacity: 1 !important;
+}
+
+body.light-mode #customerPage .customer-service-section select,
+body.light-mode #customerPage .customer-service-section textarea {
+    background: #ffffff;
+    border-color: #aebac3;
+    color: #263238;
+}
+
+body.light-mode #customerPage .customer-service-section select:focus,
+body.light-mode #customerPage .customer-service-section textarea:focus {
+    border-color: #b78300;
+    box-shadow: 0 0 0 3px rgba(183, 131, 0, .15);
+    outline: none;
+}
+
+body.light-mode #customerPage .customer-service-footer {
+    border-top-color: #d1d8dd;
+}
+
 @media (max-width: 768px) {
     #customerPage .navbar-left::after,
     #adminPage .navbar-left::after {
@@ -4102,3 +4161,55 @@ body.light-mode #customerPage .product-info .btn-small {
     }
 }
 .view-receipt-button { margin-top: 10px; }
+
+/* Final light-mode overrides for navigation and Customer Service. */
+body.light-mode #customerPage .nav-menu-items,
+body.light-mode #adminPage .nav-menu-items {
+    background: #ffffff !important;
+    border-color: #b78300 !important;
+    box-shadow: 0 14px 30px rgba(42, 52, 60, .2) !important;
+}
+
+body.light-mode #customerPage .nav-menu-items .btn,
+body.light-mode #adminPage .nav-menu-items .btn {
+    background: #f1f4f6 !important;
+    border-color: #c4cdd4 !important;
+    color: #263238 !important;
+    opacity: 1 !important;
+}
+
+body.light-mode #customerPage .nav-menu-items .btn:hover,
+body.light-mode #adminPage .nav-menu-items .btn:hover {
+    background: #e1e7eb !important;
+    border-color: #b78300 !important;
+    color: #172027 !important;
+}
+
+body.light-mode #customerPage .customer-service-section {
+    background: #ffffff !important;
+    border-color: #cbd3d9 !important;
+    box-shadow: 0 14px 32px rgba(42, 52, 60, .1) !important;
+    color: #263238 !important;
+}
+
+body.light-mode #customerPage .customer-service-section h2,
+body.light-mode #customerPage .customer-service-section label {
+    color: #263238 !important;
+}
+
+body.light-mode #customerPage .customer-service-section p,
+body.light-mode #customerPage .customer-service-footer {
+    color: #42515b !important;
+    opacity: 1 !important;
+}
+
+body.light-mode #customerPage .customer-service-section select,
+body.light-mode #customerPage .customer-service-section textarea {
+    background: #ffffff !important;
+    border-color: #aebac3 !important;
+    color: #263238 !important;
+}
+
+body.light-mode #customerPage .customer-service-footer {
+    border-top-color: #d1d8dd !important;
+}

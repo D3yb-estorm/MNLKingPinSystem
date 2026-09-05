@@ -4351,7 +4351,8 @@ body.light-mode #customerPage .customer-service-footer .btn:focus-visible {
 
     #customerPage .products-grid {
         width: 100%;
-        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
     }
 
     #customerPage .product-card {
@@ -4359,37 +4360,37 @@ body.light-mode #customerPage .customer-service-footer .btn:focus-visible {
     }
 
     #customerPage .product-info {
-        padding: 14px;
+        padding: 10px;
     }
 
     #customerPage .product-info h3 {
-        font-size: 1.05rem;
-        line-height: 1.35;
-        margin-bottom: 7px;
+        font-size: .92rem;
+        line-height: 1.25;
+        margin-bottom: 5px;
     }
 
     #customerPage .product-info p {
-        font-size: .9rem;
-        line-height: 1.4;
-        margin-bottom: 8px;
+        font-size: .72rem;
+        line-height: 1.25;
+        margin-bottom: 5px;
     }
 
     #customerPage .product-price {
-        font-size: 1.2rem;
-        line-height: 1.35;
-        margin-bottom: 8px;
+        font-size: 1rem;
+        line-height: 1.25;
+        margin-bottom: 5px;
     }
 
     #customerPage .product-stock {
-        font-size: .9rem;
-        line-height: 1.35;
-        margin-bottom: 10px;
+        font-size: .72rem;
+        line-height: 1.25;
+        margin-bottom: 7px;
     }
 
     #customerPage .product-info .btn-small {
-        min-height: 42px;
-        padding: 10px 8px;
-        font-size: .88rem;
-        line-height: 1.2;
+        min-height: 36px;
+        padding: 8px 4px;
+        font-size: .7rem;
+        line-height: 1.15;
     }
 }

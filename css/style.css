@@ -3852,6 +3852,107 @@ body.light-mode #customerPage .product-info .btn-small {
     }
 }
 
+/* Readable item content at every screen size. */
+#customerPage .products-grid {
+    align-items: stretch;
+}
+
+#customerPage .product-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+}
+
+#customerPage .product-info {
+    flex: 1;
+    min-width: 0;
+}
+
+#customerPage .product-info h3,
+#customerPage .product-info p,
+#customerPage .cart-item-name,
+#customerPage .cart-item-price,
+#customerPage .checkout-item,
+#customerPage .order-item {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+#customerPage .product-info h3 {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    line-height: 1.3;
+}
+
+#customerPage .product-info p {
+    font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+    line-height: 1.35;
+}
+
+#customerPage .cart-item,
+#customerPage .checkout-item,
+#customerPage .order-item {
+    min-width: 0;
+}
+
+#customerPage .cart-item-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+#customerPage .cart-item-quantity {
+    flex-shrink: 0;
+}
+
+@media (min-width: 481px) and (max-width: 700px) {
+    #customerPage .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #customerPage .product-info {
+        padding: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    #customerPage .products-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    #customerPage .product-image {
+        aspect-ratio: 16 / 10;
+        max-height: 220px;
+    }
+
+    #customerPage .product-info {
+        padding: 13px;
+    }
+
+    #customerPage .product-info h3 {
+        font-size: 1rem;
+    }
+
+    #customerPage .product-info p {
+        font-size: 0.84rem;
+    }
+
+    #customerPage .product-price {
+        font-size: 1.15rem;
+    }
+
+    #customerPage .product-stock {
+        font-size: 0.84rem;
+    }
+
+    #customerPage .cart-item {
+        align-items: stretch;
+    }
+
+    #customerPage .cart-item-quantity {
+        justify-content: flex-start;
+    }
+}
+
 @media (max-width: 768px) {
     #customerPage .navbar-left::after,
     #adminPage .navbar-left::after {

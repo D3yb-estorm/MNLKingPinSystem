@@ -1400,6 +1400,19 @@ function showCustomerDashboard() {
     document.getElementById('checkoutSection').style.display = 'none';
     document.getElementById('customerServiceSection').style.display = 'none';
 
+    const cachedProducts = localStorage.getItem('kingpinProducts');
+    if (cachedProducts) {
+        try {
+            const products = JSON.parse(cachedProducts);
+            if (Array.isArray(products) && products.length > 0) {
+                appData.products = products;
+                displayProducts(products);
+            }
+        } catch (error) {
+            console.warn('Unable to render cached products after customer login:', error);
+        }
+    }
+
     try {
         initializeData();
     } catch (error) {

@@ -4462,6 +4462,44 @@ body.light-mode #editCustomizationModal .modal-content {
     color: #263238 !important;
 }
 
+body.light-mode #productModal .modal-content {
+    background: #ffffff !important;
+    border-color: #cbd3d9 !important;
+    box-shadow: 0 10px 30px rgba(42, 52, 60, .2) !important;
+}
+
+body.light-mode #productModal .close {
+    color: #52616b !important;
+}
+
+body.light-mode #productModal .close:hover {
+    color: #263238 !important;
+}
+
+body.light-mode #productModal #productRatingsSection {
+    border-top-color: #d0d7dc !important;
+}
+
+body.light-mode #productModal #averageRatingDisplay,
+body.light-mode #productModal #addRatingForm {
+    background: #f1f4f6 !important;
+    color: #35434c !important;
+}
+
+body.light-mode #productModal #individualRatingsList {
+    background: #ffffff !important;
+}
+
+body.light-mode #productModal #modalProductQuantity {
+    background: #ffffff !important;
+    border-color: #aebac3 !important;
+    color: #263238 !important;
+}
+
+body.light-mode #productModal .modal-actions label {
+    color: #263238 !important;
+}
+
 body.light-mode #productModal .modal-details h2,
 body.light-mode #productModal .modal-details h4,
 body.light-mode #editCustomizationModal h2,
